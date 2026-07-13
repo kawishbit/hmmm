@@ -1,0 +1,17 @@
+---
+import QuoteEditor from "../components/editor/QuoteEditor.vue";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Hmmm — Frame your quotes">
+  <QuoteEditor client:only="vue">
+    <div
+      slot="fallback"
+      class="flex h-dvh items-center justify-center stage-dots"
+      aria-busy="true"
+      aria-label="Loading editor"
+    >
+      <p class="type-meta text-ink/40">Loading workspace…</p>
+    </div>
+  </QuoteEditor>
+</BaseLayout>

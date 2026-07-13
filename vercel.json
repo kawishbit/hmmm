@@ -1,0 +1,18 @@
+{
+  "buildCommand": "bun run build",
+  "outputDirectory": "dist",
+  "framework": null,
+  "installCommand": "bun install",
+  "redirects": [
+    {
+      "source": "/create",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/create/",
+      "destination": "/",
+      "permanent": true
+    }
+  ]
+}
