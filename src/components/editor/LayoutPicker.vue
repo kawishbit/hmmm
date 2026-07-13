@@ -12,7 +12,7 @@ defineEmits<{
 
 /** Mini frame silhouette for each ratio */
 function frameStyle(ratio: number) {
-  const max = 14;
+  const max = 12;
   let w: number;
   let h: number;
   if (ratio >= 1) {
@@ -31,7 +31,7 @@ function frameStyle(ratio: number) {
 
 <template>
   <div
-    class="flex items-center gap-0.5 rounded-lg border border-hairline bg-surface-soft p-0.5"
+    class="inline-flex items-center gap-0.5 rounded-md border border-hairline bg-surface-soft p-0.5"
     role="group"
     aria-label="Aspect ratio"
   >
@@ -39,11 +39,11 @@ function frameStyle(ratio: number) {
       v-for="layout in LAYOUT_LIST"
       :key="layout.key"
       type="button"
-      class="type-meta flex h-8 items-center gap-1.5 rounded-md px-2 transition-colors"
+      class="type-meta flex h-8 shrink-0 items-center gap-1 rounded-[5px] px-1.5 transition-colors sm:gap-1.5 sm:px-2"
       :class="
         modelValue === layout.key
-          ? 'bg-canvas text-ink shadow-sm ring-1 ring-hairline'
-          : 'text-ink/50 hover:text-ink'
+          ? 'bg-canvas text-ink shadow-sm'
+          : 'text-ink/50 hover:bg-canvas/60 hover:text-ink'
       "
       :title="`${layout.label} (${layout.key})`"
       :aria-pressed="modelValue === layout.key"
@@ -54,7 +54,8 @@ function frameStyle(ratio: number) {
         :style="frameStyle(layout.ratio)"
         aria-hidden="true"
       />
-      <span class="hidden sm:inline">{{ layout.shortLabel }}</span>
+      <!-- Always show short ratio on narrow toolbars; labels stay readable at 320px when row scrolls -->
+      <span class="tabular-nums">{{ layout.shortLabel }}</span>
     </button>
   </div>
 </template>

@@ -13,7 +13,9 @@
       "!**/.astro",
       "!**/node_modules",
       "!**/public/**/*.png",
-      "!**/public/**/*.ico"
+      "!**/public/**/*.ico",
+      "!**/playwright-report",
+      "!**/test-results"
     ]
   },
   "css": {
@@ -37,9 +39,10 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true,
+      "preset": "recommended",
       "style": {
-        "useVueMultiWordComponentNames": "off"
+        "useVueMultiWordComponentNames": "off",
+        "noNonNullAssertion": "error"
       },
       "a11y": {
         "noSvgWithoutTitle": "off"

@@ -1,4 +1,6 @@
 ---
+import { pwaInfo } from "virtual:pwa-info";
+import PwaChrome from "../components/pwa/PwaChrome.vue";
 import "../styles/global.css";
 
 interface Props {
@@ -13,20 +15,38 @@ const {
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#ffffff" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#131313" media="(prefers-color-scheme: dark)" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Hmmm" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
-    <link rel="manifest" href="/site.webmanifest" />
+    {pwaInfo && <Fragment set:html={pwaInfo.webManifest.linkTag} />}
+    {!pwaInfo && <link rel="manifest" href="/site.webmanifest" />}
     <title>{title}</title>
+    <!-- Apply stored theme before paint to avoid flash -->
+    <script is:inline>
+      (function () {
+        try {
+          var t = localStorage.getItem("hmmm-site-theme");
+          var ok = { light: 1, dark: 1, mint: 1, lilac: 1, navy: 1 };
+          if (t && ok[t]) document.documentElement.dataset.theme = t;
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body class="h-dvh overflow-hidden bg-canvas text-ink">
     <slot />
+    <PwaChrome client:only="vue" />
+    <script src="../pwa.ts"></script>
   </body>
 </html>

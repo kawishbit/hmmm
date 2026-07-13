@@ -2,6 +2,19 @@
 @import "@fontsource-variable/inter";
 @import "@fontsource/jetbrains-mono/400.css";
 @import "@fontsource/jetbrains-mono/500.css";
+/* Quote typefaces (Phase 3) */
+@import "@fontsource/dm-sans/400.css";
+@import "@fontsource/dm-sans/500.css";
+@import "@fontsource/dm-sans/700.css";
+@import "@fontsource/libre-baskerville/400.css";
+@import "@fontsource/libre-baskerville/700.css";
+@import "@fontsource/playfair-display/400.css";
+@import "@fontsource/playfair-display/500.css";
+@import "@fontsource/playfair-display/600.css";
+@import "@fontsource/playfair-display/700.css";
+@import "@fontsource/noto-sans-arabic/400.css";
+@import "@fontsource/noto-sans-arabic/500.css";
+@import "@fontsource/noto-sans-arabic/700.css";
 
 /*
   Design tokens from DESIGN.md — used for tool chrome.
@@ -9,6 +22,12 @@
 */
 
 @theme {
+  /*
+   * Tool chrome breakpoint: `tool:` = min-width 851px (wide layout).
+   * At ≤850px: Edit toggle, collapsible sidebar, layout+theme second row.
+   */
+  --breakpoint-tool: 851px;
+
   --color-primary: #000000;
   --color-on-primary: #ffffff;
   --color-ink: #000000;
@@ -61,6 +80,8 @@
     height: 100%;
     margin: 0;
     overflow: hidden;
+    /* Product floor: phone SE / narrow webviews */
+    min-width: 320px;
   }
 
   html {
@@ -159,4 +180,71 @@
   font-weight: 540;
   line-height: 1.25;
   letter-spacing: -0.01em;
+}
+
+/*
+  Site chrome themes (Phase 4).
+  Override CSS variables used by Tailwind @theme color tokens.
+  Quote canvas colors stay on the document model — not affected here.
+*/
+
+html[data-theme="dark"] {
+  --color-primary: #f5f5f5;
+  --color-on-primary: #0a0a0a;
+  --color-ink: #f0f0f0;
+  --color-canvas: #131313;
+  --color-inverse-canvas: #f5f5f5;
+  --color-inverse-ink: #0a0a0a;
+  --color-hairline: #2a2a2a;
+  --color-hairline-soft: #222222;
+  --color-surface-soft: #1c1c1c;
+  --color-stage: #0f0f0f;
+  --color-stage-dot: #2a2a2a;
+  --color-block-lime: #3d4a28;
+  --color-block-lilac: #3a2f55;
+  --color-block-cream: #3a362c;
+  color-scheme: dark;
+}
+
+html[data-theme="mint"] {
+  --color-primary: #1a3d2e;
+  --color-on-primary: #f4fff7;
+  --color-ink: #14261c;
+  --color-canvas: #f3faf5;
+  --color-hairline: #c5dccb;
+  --color-hairline-soft: #dceee1;
+  --color-surface-soft: #e5f4ea;
+  --color-stage: #dceee1;
+  --color-stage-dot: #b8d4c0;
+  --color-block-lime: #c8e6cd;
+  color-scheme: light;
+}
+
+html[data-theme="lilac"] {
+  --color-primary: #2a1f45;
+  --color-on-primary: #f7f3ff;
+  --color-ink: #1f1830;
+  --color-canvas: #f7f4fc;
+  --color-hairline: #d4c8ec;
+  --color-hairline-soft: #e8e0f5;
+  --color-surface-soft: #ebe4f7;
+  --color-stage: #e4dcf4;
+  --color-stage-dot: #c9bce6;
+  --color-block-lilac: #c5b0f4;
+  color-scheme: light;
+}
+
+html[data-theme="navy"] {
+  --color-primary: #e8e6f5;
+  --color-on-primary: #1f1d3d;
+  --color-ink: #eceaf8;
+  --color-canvas: #16152a;
+  --color-hairline: #2e2c4a;
+  --color-hairline-soft: #24233a;
+  --color-surface-soft: #1f1d35;
+  --color-stage: #12111f;
+  --color-stage-dot: #2a2840;
+  --color-block-lime: #2a3a20;
+  --color-block-cream: #2a2630;
+  color-scheme: dark;
 }

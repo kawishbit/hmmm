@@ -1,13 +1,18 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import { composeBackgroundFilter, galleryById } from "../../lib/backgrounds";
-import { type QuoteDocument, SECONDARY_FONT_SCALE } from "../../lib/types";
+import { fontById } from "../../lib/fonts";
+import type { FittedQuoteType } from "../../lib/pretext-fit";
+import type { QuoteDocument } from "../../lib/types";
+import { detectTextDirection } from "../../lib/words";
 
 const props = defineProps<{
   document: QuoteDocument;
   /** Explicit pixel size of the on-screen frame */
   width: number;
   height: number;
+  /** Display-space fitted type metrics from Phase 2.5 */
+  fitted: FittedQuoteType;
 }>();
 
 const rootEl = ref<HTMLElement | null>(null);
@@ -44,13 +49,11 @@ const backgroundStyle = computed(() => {
   return { backgroundColor: "#1f1d3d" };
 });
 
-/** Blur needs overflow room — expand the painted layer slightly. */
 const bgFilter = computed(() =>
   composeBackgroundFilter(props.document.filterId, props.document.blurPx),
 );
 
 const bgExpand = computed(() => {
-  // Extra margin so blur doesn't clip hard at frame edges
   const b = props.document.blurPx;
   return b > 0 ? Math.ceil(b * 2.5) : 0;
 });
@@ -67,23 +70,10 @@ const justifyContent = computed(() => {
 });
 
 const textAlign = computed(() => props.document.style.align);
-
-const scale = computed(() => {
-  const exportShort = 1080;
-  const displayShort = Math.min(props.width, props.height);
-  return displayShort / exportShort;
-});
-
-const displayFontPx = computed(() => {
-  return Math.max(14, Math.round(props.document.style.fontSizePx * scale.value));
-});
-
-const secondaryFontPx = computed(() => {
-  return Math.max(12, Math.round(displayFontPx.value * SECONDARY_FONT_SCALE));
-});
+const fontWeight = computed(() => props.document.style.fontWeight ?? 500);
+const secondaryWeight = computed(() => (fontWeight.value >= 600 ? 500 : 400));
 
 const displayText = computed(() => props.document.text.trim() || "Your quote appears here");
-
 const secondaryText = computed(() => props.document.textSecondary.trim());
 const hasSecondary = computed(() => secondaryText.value.length > 0);
 
@@ -93,7 +83,14 @@ const displayAuthor = computed(() => {
   return a ? `— ${a}` : "";
 });
 
-const pad = computed(() => Math.round(Math.min(props.width, props.height) * 0.1));
+const textDir = computed(() => {
+  const font = fontById(props.document.style.fontId);
+  if (font.rtl) return "rtl" as const;
+  return detectTextDirection(`${props.document.text} ${props.document.textSecondary}`);
+});
+
+const pad = computed(() => Math.round(props.fitted.inset));
+const maxTextW = computed(() => Math.round(props.fitted.contentW));
 
 const scrimOpacity = computed(() => Math.min(0.85, Math.max(0, props.document.scrimOpacity)));
 </script>
@@ -107,7 +104,6 @@ const scrimOpacity = computed(() => Math.min(0.85, Math.max(0, props.document.sc
       height: `${height}px`,
     }"
   >
-    <!-- Background layer: filters + blur only here (text stays sharp) -->
     <div class="pointer-events-none absolute inset-0 overflow-hidden">
       <div
         class="quote-preview__bg absolute"
@@ -122,7 +118,6 @@ const scrimOpacity = computed(() => Math.min(0.85, Math.max(0, props.document.sc
       />
     </div>
 
-    <!-- Scrim for legibility -->
     <div
       v-if="scrimOpacity > 0"
       class="pointer-events-none absolute inset-0"
@@ -131,7 +126,6 @@ const scrimOpacity = computed(() => Math.min(0.85, Math.max(0, props.document.sc
       }"
     />
 
-    <!-- Text layer -->
     <div
       class="quote-preview__canvas absolute inset-0 flex flex-col"
       :style="{
@@ -142,19 +136,22 @@ const scrimOpacity = computed(() => Math.min(0.85, Math.max(0, props.document.sc
       }"
     >
       <div
-        class="quote-preview__text max-w-full"
+        class="quote-preview__text"
+        :dir="textDir"
         :style="{
           textAlign,
           fontFamily: document.style.fontFamily,
           color: document.style.color,
+          maxWidth: `${maxTextW}px`,
+          width: '100%',
         }"
       >
         <p
           class="m-0 whitespace-pre-wrap break-words"
           :style="{
-            fontSize: `${displayFontPx}px`,
-            fontWeight: 500,
-            lineHeight: 1.3,
+            fontSize: `${fitted.primarySize}px`,
+            fontWeight,
+            lineHeight: String(fitted.primaryLineHeight / fitted.primarySize),
             letterSpacing: '-0.02em',
           }"
         >
@@ -162,13 +159,15 @@ const scrimOpacity = computed(() => Math.min(0.85, Math.max(0, props.document.sc
         </p>
 
         <p
-          v-if="hasSecondary"
+          v-if="hasSecondary && fitted.secondarySize"
           class="m-0 whitespace-pre-wrap break-words"
           :style="{
-            marginTop: `${Math.round(displayFontPx * 0.45)}px`,
-            fontSize: `${secondaryFontPx}px`,
-            fontWeight: 400,
-            lineHeight: 1.35,
+            marginTop: `${Math.round(fitted.gapPrimarySecondary)}px`,
+            fontSize: `${fitted.secondarySize}px`,
+            fontWeight: secondaryWeight,
+            lineHeight: fitted.secondaryLineHeight
+              ? String(fitted.secondaryLineHeight / fitted.secondarySize)
+              : '1.35',
             letterSpacing: '-0.01em',
             opacity: 0.88,
           }"
@@ -180,12 +179,12 @@ const scrimOpacity = computed(() => Math.min(0.85, Math.max(0, props.document.sc
           v-if="displayAuthor"
           class="m-0"
           :style="{
-            marginTop: `${Math.round(displayFontPx * (hasSecondary ? 0.5 : 0.55))}px`,
+            marginTop: `${Math.round(fitted.gapToAuthor || fitted.primarySize * 0.45)}px`,
             color: document.style.authorColor,
-            fontSize: `${Math.max(11, Math.round(displayFontPx * 0.38))}px`,
+            fontSize: `${fitted.authorSize}px`,
             fontWeight: 400,
             letterSpacing: '0.02em',
-            lineHeight: 1.35,
+            lineHeight: String(fitted.authorLineHeight / fitted.authorSize),
           }"
         >
           {{ displayAuthor }}

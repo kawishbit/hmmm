@@ -2,79 +2,56 @@
 
 **Goal:** Fast starts via templates; site themes; partner sites can open the editor with quote + author prefilled.
 
-**Depends on:** Phases 1–3 (composition model stable)  
-**Unblocks:** marketing polish and external integrations
+**Depends on:** Phases 1–3  
+**Unblocks:** marketing polish and external integrations (Phase 5 PWA)
+
+**Status:** Complete
 
 ---
 
 ## Scope
 
 ### Quote templates
-- [ ] Define `Template` type: preset background (gallery id or solid), typography, colors, alignment, aspect ratio, optional sample text.
-- [ ] Ship ≥ 3 templates (e.g. “Editorial serif”, “Bold sans”, “Minimal navy”).
-- [ ] Template gallery on `/create` (and optional section on landing).
-- [ ] Applying a template merges into current document; confirm if user has unsaved customizations (optional).
-- [ ] Templates must not require network beyond local assets.
+- [x] `Template` type + `applyTemplate()` in `src/lib/templates.ts`
+- [x] 5 templates: Editorial serif, Bold sans, Minimal navy, Ocean calm, Lime poster
+- [x] **Tpl** panel tab; keeps existing text unless empty (then sample fills)
+- [x] Local assets only
 
 ### Site themes
-- [ ] Theme tokens for **site chrome** (not necessarily the quote canvas):
-  - **Light** (default): DESIGN.md monochrome + pastels.
-  - **Dark**: inverse canvas / ink with adjusted hairlines and surfaces.
-  - **2–3 popular color schemes** (e.g. accent packs or tinted shells — pick concrete names during implementation: mint, lilac, navy, etc. from DESIGN.md block palette).
-- [ ] Persist preference in `localStorage` + `data-theme` on `<html>`.
-- [ ] Theme picker in header (not only binary toggle).
-- [ ] Optional: respect `prefers-color-scheme` for first visit only (document decision).
-- [ ] Ensure contrast for inputs/buttons per theme.
+- [x] Light (default), Dark, Mint, Lilac, Navy — chrome only (`data-theme` + CSS vars)
+- [x] `localStorage` key `hmmm-site-theme` + early inline script (no FOUC)
+- [x] Theme picker in toolbar (and mobile row)
+- [x] First visit: light (not `prefers-color-scheme`)
 
-### Deep linking / embed API
-Partner flow: external site → button → Hmmm with fields filled.
+### Deep linking
+- [x] `q` + `author` via `src/lib/deeplink.ts`
+- [x] Applied on mount from `window.location.search`; 300-unit clamp; plain text only
+- [x] `/` and `/create` both host the editor (query preserved on static hosts)
+- [x] **Link** button copies absolute share URL
+- [x] README “Integrating with Hmmm”
 
-- [ ] Supported query params on `/create` (**v1 only these two**):
-  - `q` — quote text
-  - `author` — author name
-- [ ] Parsing:
-  - Standard `decodeURIComponent` for UTF-8.
-  - Reject / soft-fail on malformed encoding.
-  - Apply hard 300-word cap after decode (trim or reject with message).
-- [ ] Document practical URL length limits; show toast if empty/truncated by browser.
-- [ ] Security: treat all params as untrusted text (no HTML injection in preview — text content only).
-- [ ] Public mini-docs: README section **“Integrating with Hmmm”** with example:
-
-```html
-<a href="https://hmmm.example/create?q=Stay%20hungry&author=Steve%20Jobs">
-  Frame this quote
-</a>
-```
-
-- [ ] Optional: copy-share-link button that serializes current `q` + `author` into a URL.
-- [ ] Deferred: `template`, `layout`, base64 variants.
-
-### Landing polish
-- [ ] Color-block storytelling section explaining the tool (DESIGN.md rhythm).
-- [ ] CTA pair: primary “Create” + secondary “Browse templates” if applicable.
-
----
-
-## Out of scope
-
-- OAuth / signed partner tokens.
-- Server-side shortening service for huge quotes (client workarounds only unless we revisit no-DB).
-- User-generated public template marketplace.
+### Landing
+- [x] Skipped — product remains editor-first (tool shell). Templates live in Tpl tab.
 
 ---
 
 ## Acceptance criteria
 
-1. One click on a template yields a complete, exportable composition.
-2. Theme picker switches light / dark / color schemes; refresh keeps preference.
-3. Visiting `/create?q=Hello%20world&author=Test` opens editor with fields filled and preview updated.
-4. Special characters (`&`, `#`, emoji, non-Latin) round-trip via proper encoding.
-5. XSS-safe: injecting markup in `q` does not execute as HTML.
+1. [x] Template one-click → exportable composition  
+2. [x] Theme picker + refresh persistence  
+3. [x] `/create?q=Hello%20world&author=Test` prefills  
+4. [x] Special characters round-trip (tests + URLSearchParams)  
+5. [x] XSS-safe: markup in `q` is text content only  
 
 ---
 
-## Suggested PR / commit slices
+## Key files
 
-1. “feat: quote templates”  
-2. “feat: site themes”  
-3. “feat: create deep-link query API + docs”
+| Path | Role |
+|------|------|
+| `src/lib/templates.ts` | Catalog + apply |
+| `src/lib/themes.ts` | Theme ids + storage |
+| `src/lib/deeplink.ts` | Parse / build / clear |
+| `src/components/editor/TemplatesPanel.vue` | UI |
+| `src/components/editor/ThemePicker.vue` | UI |
+| `src/styles/global.css` | `[data-theme]` overrides |

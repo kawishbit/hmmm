@@ -1,4 +1,6 @@
-/** Curated gallery + solid presets + filter CSS for Phase 2. */
+/** Curated gallery + solid presets + filter CSS (Phases 2 + 9). */
+
+export type GalleryPack = "abstract" | "nature" | "texture" | "urban" | "dark" | "paper";
 
 export interface GalleryItem {
   id: string;
@@ -7,6 +9,7 @@ export interface GalleryItem {
   src: string;
   /** Prefer light or dark text on this bg */
   textTone: "light" | "dark";
+  pack: GalleryPack;
 }
 
 export interface SolidPreset {
@@ -40,48 +43,187 @@ export interface FilterPreset {
   css: string;
 }
 
+export const GALLERY_PACKS: { id: GalleryPack | "all"; label: string }[] = [
+  { id: "all", label: "All" },
+  { id: "abstract", label: "Abstract" },
+  { id: "nature", label: "Nature" },
+  { id: "texture", label: "Texture" },
+  { id: "urban", label: "Urban" },
+  { id: "dark", label: "Dark" },
+  { id: "paper", label: "Paper" },
+];
+
+/** Original SVG abstracts + Phase 9 photo pack (local files only). */
 export const GALLERY: GalleryItem[] = [
-  { id: "navy-dusk.svg", label: "Navy dusk", src: "/backgrounds/navy-dusk.svg", textTone: "light" },
-  { id: "ocean-depth.svg", label: "Ocean", src: "/backgrounds/ocean-depth.svg", textTone: "light" },
-  { id: "ink-void.svg", label: "Ink void", src: "/backgrounds/ink-void.svg", textTone: "light" },
+  // Abstract SVGs
+  {
+    id: "navy-dusk.svg",
+    label: "Navy dusk",
+    src: "/backgrounds/navy-dusk.svg",
+    textTone: "light",
+    pack: "abstract",
+  },
+  {
+    id: "ocean-depth.svg",
+    label: "Ocean depth",
+    src: "/backgrounds/ocean-depth.svg",
+    textTone: "light",
+    pack: "abstract",
+  },
+  {
+    id: "ink-void.svg",
+    label: "Ink void",
+    src: "/backgrounds/ink-void.svg",
+    textTone: "light",
+    pack: "dark",
+  },
   {
     id: "forest-canopy.svg",
-    label: "Forest",
+    label: "Forest canopy",
     src: "/backgrounds/forest-canopy.svg",
     textTone: "light",
+    pack: "abstract",
   },
   {
     id: "magenta-pulse.svg",
     label: "Magenta",
     src: "/backgrounds/magenta-pulse.svg",
     textTone: "light",
+    pack: "abstract",
   },
   {
     id: "sunset-strip.svg",
-    label: "Sunset",
+    label: "Sunset strip",
     src: "/backgrounds/sunset-strip.svg",
     textTone: "light",
+    pack: "abstract",
   },
-  { id: "slate-mesh.svg", label: "Slate", src: "/backgrounds/slate-mesh.svg", textTone: "light" },
+  {
+    id: "slate-mesh.svg",
+    label: "Slate mesh",
+    src: "/backgrounds/slate-mesh.svg",
+    textTone: "light",
+    pack: "abstract",
+  },
   {
     id: "lilac-bloom.svg",
-    label: "Lilac",
+    label: "Lilac bloom",
     src: "/backgrounds/lilac-bloom.svg",
     textTone: "dark",
+    pack: "abstract",
   },
-  { id: "lime-mist.svg", label: "Lime mist", src: "/backgrounds/lime-mist.svg", textTone: "dark" },
-  { id: "mint-fog.svg", label: "Mint", src: "/backgrounds/mint-fog.svg", textTone: "dark" },
+  {
+    id: "lime-mist.svg",
+    label: "Lime mist",
+    src: "/backgrounds/lime-mist.svg",
+    textTone: "dark",
+    pack: "abstract",
+  },
+  {
+    id: "mint-fog.svg",
+    label: "Mint fog",
+    src: "/backgrounds/mint-fog.svg",
+    textTone: "dark",
+    pack: "abstract",
+  },
   {
     id: "coral-heat.svg",
-    label: "Coral",
+    label: "Coral heat",
     src: "/backgrounds/coral-heat.svg",
     textTone: "dark",
+    pack: "abstract",
   },
   {
     id: "cream-paper.svg",
-    label: "Cream",
+    label: "Cream paper",
     src: "/backgrounds/cream-paper.svg",
     textTone: "dark",
+    pack: "paper",
+  },
+  // Photo pack (local JPEG — see CREDITS.md)
+  {
+    id: "photo-mountains-dusk.jpg",
+    label: "Mountains",
+    src: "/backgrounds/photo-mountains-dusk.jpg",
+    textTone: "light",
+    pack: "nature",
+  },
+  {
+    id: "photo-ocean-waves.jpg",
+    label: "Ocean waves",
+    src: "/backgrounds/photo-ocean-waves.jpg",
+    textTone: "light",
+    pack: "nature",
+  },
+  {
+    id: "photo-forest-mist.jpg",
+    label: "Forest mist",
+    src: "/backgrounds/photo-forest-mist.jpg",
+    textTone: "light",
+    pack: "nature",
+  },
+  {
+    id: "photo-desert-dunes.jpg",
+    label: "Desert dunes",
+    src: "/backgrounds/photo-desert-dunes.jpg",
+    textTone: "light",
+    pack: "nature",
+  },
+  {
+    id: "photo-leaves.jpg",
+    label: "Leaves",
+    src: "/backgrounds/photo-leaves.jpg",
+    textTone: "light",
+    pack: "nature",
+  },
+  {
+    id: "photo-night-sky.jpg",
+    label: "Night sky",
+    src: "/backgrounds/photo-night-sky.jpg",
+    textTone: "light",
+    pack: "dark",
+  },
+  {
+    id: "photo-dark-abstract.jpg",
+    label: "Dark abstract",
+    src: "/backgrounds/photo-dark-abstract.jpg",
+    textTone: "light",
+    pack: "dark",
+  },
+  {
+    id: "photo-texture-concrete.jpg",
+    label: "Concrete",
+    src: "/backgrounds/photo-texture-concrete.jpg",
+    textTone: "light",
+    pack: "texture",
+  },
+  {
+    id: "photo-marble.jpg",
+    label: "Marble",
+    src: "/backgrounds/photo-marble.jpg",
+    textTone: "light",
+    pack: "texture",
+  },
+  {
+    id: "photo-paper-texture.jpg",
+    label: "Paper grain",
+    src: "/backgrounds/photo-paper-texture.jpg",
+    textTone: "dark",
+    pack: "paper",
+  },
+  {
+    id: "photo-city-bokeh.jpg",
+    label: "City lights",
+    src: "/backgrounds/photo-city-bokeh.jpg",
+    textTone: "light",
+    pack: "urban",
+  },
+  {
+    id: "photo-soft-gradient.jpg",
+    label: "Soft gradient",
+    src: "/backgrounds/photo-soft-gradient.jpg",
+    textTone: "light",
+    pack: "abstract",
   },
 ];
 
@@ -136,6 +278,11 @@ export const MAX_UPLOAD_EDGE = 2000;
 
 export function galleryById(id: string): GalleryItem | undefined {
   return GALLERY.find((g) => g.id === id);
+}
+
+export function galleryByPack(pack: GalleryPack | "all"): GalleryItem[] {
+  if (pack === "all") return GALLERY;
+  return GALLERY.filter((g) => g.pack === pack);
 }
 
 export function filterById(id: FilterPresetId): FilterPreset {

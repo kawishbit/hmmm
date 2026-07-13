@@ -43,18 +43,18 @@ onUnmounted(() => {
 const steps = [
   {
     n: "01",
-    title: "Write the quote",
-    body: "Content tab: main quote, optional translation, and author (max 300 words each).",
+    title: "Write or open a link",
+    body: "Text tab for quote + author, or open /create?q=…&author=… from a partner site.",
   },
   {
     n: "02",
-    title: "Style the background",
-    body: "Background tab: gallery, solid/gradient, upload, blur, filters, and darken overlay.",
+    title: "Style with tabs",
+    body: "Type, Bg, and Tpl (templates). Theme swatches in the toolbar change app chrome only.",
   },
   {
     n: "03",
-    title: "Pick a layout & download",
-    body: "Switch aspect ratios in the toolbar, then export a PNG — nothing leaves your browser.",
+    title: "Share & download",
+    body: "Copy link shares a URL with quote + author prefilled. Download exports a PNG — all in your browser.",
   },
 ];
 </script>

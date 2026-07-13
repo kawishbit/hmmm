@@ -4,7 +4,7 @@
 
 **Depends on:** Phase 2 (stable canvas + multi-block text)  
 **Unblocks:** Phase 3 typography chrome (manual size becomes “prefer / max”; fonts still feed the same fitter)  
-**Status:** Planned
+**Status:** Complete
 
 ---
 
@@ -301,13 +301,14 @@ Visual QA checklist per layout: 1:1, 4:5, 9:16, 16:9, 2:1 × {short, medium, lon
 
 ### In (2.5)
 
-- [ ] Per-layout content box + H1/H2/author budgets  
-- [ ] Pretext-based binary-search font fit for primary + secondary  
-- [ ] Preferred max size clamp  
-- [ ] Collapse secondary when empty  
-- [ ] Soft overflow warning  
-- [ ] Unit tests + visual QA matrix  
-- [ ] Docs / How-to blurb  
+- [x] Per-layout content box + H1/H2/author budgets (`text-budgets.ts`)  
+- [x] Pretext-based binary-search font fit for primary + secondary (`pretext-fit.ts`)  
+- [x] Preferred max size clamp (`style.fontSizePx`)  
+- [x] Collapse secondary when empty  
+- [x] Soft overflow warning in Content panel  
+- [x] Unit tests (`bun test`) with approximate measure for CI  
+- [x] Docs / How-to blurb  
+- [ ] Full visual QA matrix (manual)
 
 ### Out (leave for Phase 3+)
 

@@ -2,8 +2,10 @@
 
 **Goal:** Full control of type and composition; aspect ratios; intelligent fit so long quotes prefer full text over silent truncation (pretext-informed).
 
-**Depends on:** Phase 1 (required), Phase 2 (recommended for realistic previews)  
+**Depends on:** Phase 1–2.5  
 **Unblocks:** Templates and deep-link quality (Phase 4)
+
+**Status:** Complete
 
 ---
 
@@ -11,76 +13,62 @@
 
 ### Aspect ratios / layouts
 - [x] Support common ratios (toolbar picker shipped early with tool shell):
-  - `1:1` (Instagram post)
-  - `4:5` (IG portrait)
-  - `9:16` (story / TikTok)
-  - `16:9` (landscape / OG)
-  - `2:1` (wide)
-- [x] Layout picker UI in top toolbar (mini frame + ratio chips).
-- [x] Preview frame and export resolution follow selected ratio (export short side 1080).
-- [ ] Optional additional ratios / custom size (if needed).
+  - `1:1`, `4:5`, `9:16`, `16:9`, `2:1`
+- [x] Layout picker UI in top toolbar
+- [x] Preview frame and export resolution follow selected ratio (export short side 1080)
 
 ### Typography controls
-- [ ] Font family picker — curated web-safe / bundled fonts good for quotes (serif + sans + display; include at least one that handles Arabic if we claim multilingual — see open questions).
-- [ ] Color picker (quote + author; optional separate author color).
-- [ ] Size control (slider or stepped sizes); may be auto-overridden by fit engine.
-- [ ] Weight / style if font supports it (optional).
-- [ ] Line height / letter-spacing (optional advanced panel).
+- [x] Font family picker — Inter, DM Sans, Libre Baskerville, Playfair Display, Georgia, Noto Sans Arabic
+- [x] Color picker for quote + author (presets + native color input)
+- [x] Max size slider (preferred max; auto-fit never exceeds)
+- [x] Weight chips per font
+- [x] Line-height / letter-spacing stay design defaults (optional advanced later)
 
 ### Position & alignment
-- [ ] Text align: left / center / right (and start/end for RTL).
-- [ ] Vertical alignment: top / middle / bottom (or free position).
-- [ ] Drag-to-position **or** padding insets + safe margins (pick one primary interaction; drag is nicer).
-- [ ] Author placement relative to quote (below, with em-dash convention).
+- [x] Text align: left / center / right
+- [x] Vertical alignment: top / middle / bottom
+- [x] Padding via per-layout text budgets (Phase 2.5)
+- [x] Author below quote with em-dash convention
 
-### Multilingual & 300-word policy
-- [ ] Word/count utility:
-  - Latin: whitespace tokens.
-  - CJK: character-based budget approximation (document formula in UI).
-  - Arabic / mixed scripts: sensible counting; set `dir` and font fallbacks.
-- [ ] **Hard cap at 300 words** (or script-equivalent): block input beyond cap and refuse export if somehow over.
-- [ ] Within the cap, prefer **showing full text**; do not truncate by default.
+### Multilingual & 300-unit policy
+- [x] Latin: whitespace words
+- [x] CJK-heavy text: character budget
+- [x] Arabic / mixed: RTL detection + Noto Sans Arabic; dir on text block
+- [x] Hard cap 300 units; clamp on input
+- [x] No silent truncation; full text preferred via auto-fit
 
 ### pretext / fit engine
-- Core auto-fit lives in **[phase-2.5-pretext-fit.md](./phase-2.5-pretext-fit.md)** (do that first).
-- [ ] Integrate [pretext](https://github.com/chenglou/pretext) binary-search fit (owned by 2.5).
-- [ ] Measure whether current font size + box fits the full quote (2.5).
-- [ ] Strategies when it doesn’t fit (ordered preference):
-  1. Auto-reduce font size within min/max bounds — **2.5**.
-  2. Suggest alternate aspect ratios that yield more vertical space — **Phase 3 polish**.
-  3. Optional user-approved truncation / ellipsis (never silent) — **Phase 3 optional**.
-- [ ] UI: non-blocking banner (“This quote fits better in 9:16 — Switch”) when fit score is poor — **Phase 3** (2.5 ships a simpler overflow warning).
-- [ ] Unit-test pure fit helpers with fixture strings — **2.5**.
-- [ ] Manual size slider drives **preferred max**; fitted size = `min(preferred, autoFit)` once 2.5 lands.
+- [x] Owned by [phase-2.5-pretext-fit.md](./phase-2.5-pretext-fit.md)
+- [x] Manual size slider = preferred max; fitted = `min(preferred, autoFit)`
+- [x] Layout suggestions when overflow (“Switch to 9:16”) via `layout-suggest.ts`
 
 ---
 
-## Out of scope
+## Key files
 
-- Full desktop-publishing features (columns, drop caps, multi-block text).
-- User-uploaded custom fonts (possible later via FontFace API).
+| Path | Role |
+|------|------|
+| `src/lib/fonts.ts` | Font catalog + color presets |
+| `src/lib/words.ts` | Script-aware count / clamp / dir |
+| `src/lib/layout-suggest.ts` | Alternate layout ranking |
+| `src/components/editor/TypographyPanel.vue` | Type tab UI |
+| `src/components/editor/QuotePreview.vue` | Weight, dir, colors |
+| `src/styles/global.css` | Fontsource imports |
 
 ---
 
 ## Acceptance criteria
 
-1. All planned aspect ratios export at correct dimensions.
-2. Font, color, size, alignment, and position changes reflect in preview + PNG.
-3. Quotes at or under 300 words can still be composed (possibly smaller type / taller layout) without forced silent truncation; over-cap input is blocked.
-4. Overflow surfaces a suggestion or auto-fit; user understands what happened.
-5. RTL sample quote renders with correct direction when using an appropriate font.
+1. [x] Aspect ratios export at correct dimensions
+2. [x] Font, color, size, alignment, vertical position change preview (+ PNG)
+3. [x] ≤300 units compose with auto-fit; over-cap blocked
+4. [x] Overflow shows warning + switch layout chips
+5. [x] Arabic sample can use Noto Arabic + RTL dir
 
 ---
 
-## Technical notes
+## Out of scope (still)
 
-- Keep measurement and export DPI consistent (devicePixelRatio vs fixed export scale).
-- Isolate fit logic from Vue components for tests.
-- Document min font size for legibility on mobile screenshots.
-
----
-
-## Suggested PR / commit slices
-
-1. “feat: aspect ratios and typography controls”  
-2. “feat: pretext-based quote fit and layout suggestions”
+- Drag free-position
+- User-uploaded fonts
+- Advanced letter-spacing / line-height sliders

@@ -2,7 +2,7 @@
 
 > **Product:** A PWA for framing quotes as shareable images — background + text overlay, all client-side.  
 > **Sources:** [INITIAL_PROMPT.md](../INITIAL_PROMPT.md), [DESIGN.md](../DESIGN.md)  
-> **Status:** Phase 0–2 complete · Phase 2.5 (pretext fit) planned
+> **Status:** Phase 0–9 complete
 
 ---
 
@@ -84,12 +84,16 @@ Implement **tool chrome** using tokens from [DESIGN.md](../DESIGN.md) — not a 
 | **0** | [phase-0-foundation.md](./phase-0-foundation.md) | Scaffold, tokens, layout shell, CI hygiene | **Done** — runnable shell |
 | **1** | [phase-1-core-editor.md](./phase-1-core-editor.md) | Quote + author, live preview, basic type, PNG export | **Done** — MVP type → export |
 | **2** | [phase-2-backgrounds.md](./phase-2-backgrounds.md) | Gallery, upload, blur, filters | **Done** — Background tab |
-| **2.5** | [phase-2.5-pretext-fit.md](./phase-2.5-pretext-fit.md) | Pretext auto type size + per-layout max heights (primary / translation) | Planned — readable quotes in every layout |
-| **3** | [phase-3-typography-layout.md](./phase-3-typography-layout.md) | Fonts, position, alignment; consumes 2.5 fitter | Production-quality composition |
-| **4** | [phase-4-templates-themes-deeplink.md](./phase-4-templates-themes-deeplink.md) | Templates, site themes, URL prefill API | Embeddable + fast starts |
-| **5** | [phase-5-pwa-deploy.md](./phase-5-pwa-deploy.md) | Service worker, offline, polish, launch | Installable PWA |
+| **2.5** | [phase-2.5-pretext-fit.md](./phase-2.5-pretext-fit.md) | Pretext auto type size + per-layout max heights (primary / translation) | **Done** — auto-fit engine |
+| **3** | [phase-3-typography-layout.md](./phase-3-typography-layout.md) | Fonts, position, alignment; consumes 2.5 fitter | **Done** — Type tab + layout suggestions |
+| **4** | [phase-4-templates-themes-deeplink.md](./phase-4-templates-themes-deeplink.md) | Templates, site themes, URL prefill API | **Done** — Tpl tab, themes, deep links |
+| **5** | [phase-5-pwa-deploy.md](./phase-5-pwa-deploy.md) | Service worker, offline, polish, launch | **Done** — v1.0.0 PWA |
+| **6** | [phase-6-unit-tests.md](./phase-6-unit-tests.md) | Meaningful unit tests only | **Done** |
+| **7** | [phase-7-integration-e2e.md](./phase-7-integration-e2e.md) | Build integration + Playwright e2e | **Done** |
+| **8** | [phase-8-self-hosting.md](./phase-8-self-hosting.md) | Local / Vercel / Docker self-host | **Done** |
+| **9** | [phase-9-curated-backgrounds.md](./phase-9-curated-backgrounds.md) | Local photo packs + upload polish (no API) | **Done** |
 
-Phases are sequential for dependency reasons (0→1→2→3); 4 and 5 can partially parallelize after 3.
+Phases 0→5 are product; 6–7 are quality; 8 is ops; 9 extends backgrounds with a stock API.
 
 ---
 

@@ -5,7 +5,7 @@
 **Depends on:** Phase 1  
 **Unlocks:** richer templates (Phase 4) and better exports
 
-**Status:** Complete
+**Status:** Complete · extended by [Phase 9 — curated photo packs](./phase-9-curated-backgrounds.md)
 
 ---
 

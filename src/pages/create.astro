@@ -1,4 +1,21 @@
 ---
-// Back-compat: editor lives on `/`
-return Astro.redirect("/", 301);
+/**
+ * Partner deep-link entry: /create?q=...&author=...
+ * Same full editor as `/` so static hosts keep query params without a redirect hop.
+ */
+import QuoteEditor from "../components/editor/QuoteEditor.vue";
+import BaseLayout from "../layouts/BaseLayout.astro";
 ---
+
+<BaseLayout title="Create — Hmmm" description="Create a shareable quote image.">
+  <QuoteEditor client:only="vue">
+    <div
+      slot="fallback"
+      class="flex h-dvh items-center justify-center stage-dots"
+      aria-busy="true"
+      aria-label="Loading editor"
+    >
+      <p class="type-meta text-ink/40">Loading workspace…</p>
+    </div>
+  </QuoteEditor>
+</BaseLayout>

@@ -1,0 +1,23 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Not found — Hmmm" description="This page does not exist.">
+  <div class="flex h-dvh flex-col items-center justify-center gap-6 px-6 stage-dots">
+    <div
+      class="w-full max-w-md rounded-lg border border-hairline bg-canvas p-8 text-center shadow-[0_8px_32px_rgba(0,0,0,0.08)]"
+    >
+      <p class="type-meta mb-3 text-ink/40">404</p>
+      <h1 class="type-modal-title text-ink">Page not found</h1>
+      <p class="type-body mt-3 text-ink/65">
+        That route isn’t part of Hmmm. Head back to the editor and frame a quote.
+      </p>
+      <a
+        href="/"
+        class="type-button mt-6 inline-flex items-center justify-center rounded-pill bg-primary px-5 py-2.5 text-on-primary hover:opacity-90"
+      >
+        Open editor
+      </a>
+    </div>
+  </div>
+</BaseLayout>
