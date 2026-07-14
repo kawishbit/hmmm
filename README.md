@@ -40,7 +40,7 @@ Built as an Excalidraw-style workspace (toolbar + side panel + live stage) and s
 
 ### Features
 
-- **Quote editor** — primary text, optional translation, and author (hard cap: 300 words/units)
+- **Quote editor** — primary text, optional translation (1300-character cap), and author (100-character cap)
 - **Layouts** — 1:1, 4:5, 9:16, 16:9, 2:1 with auto type-fit via [pretext](https://github.com/chenglou/pretext)
 - **Backgrounds** — curated local gallery (SVG + photo packs), solids, gradients, blur, filters, scrim
 - **Upload** — drag-and-drop or file picker; images stay on the device (never uploaded)
@@ -221,7 +221,8 @@ Full plan: [plans/PLAN.md](./plans/PLAN.md).
 
 - No login / authentication  
 - No database  
-- Hard cap: **300 words/units** per quote field  
+- Hard cap: **1300 characters** per quote field; **100 characters** for author  
+
 
 ## Brand assets
 
@@ -230,7 +231,8 @@ Logo and repository banner live under [`logos/`](./logos/):
 | Asset | Path |
 |-------|------|
 | Banner (3:1) | [`logos/banners/banner.png`](./logos/banners/banner.png) |
-| Logo (SVG / PNG) | [`logos/logo.svg`](./logos/logo.svg) · [`logos/logo.png`](./logos/logo.png) |
+| Logo (SVG / PNG) | [`logos/logo.svg`](./logos/logo.svg) · [`logos/logo.png`](./logos/logo.png) (Mono White) |
+| App icons | [`public/favicon.svg`](./public/favicon.svg) · [`public/icons/`](./public/icons/) · [`public/logo.svg`](./public/logo.svg) |
 
 ## License
 

@@ -14,11 +14,12 @@ import { applySiteTheme, resolveInitialTheme, type SiteThemeId } from "../../lib
 import {
   type AspectRatioKey,
   DEFAULT_QUOTE_DOCUMENT,
-  MAX_WORDS,
+  MAX_AUTHOR_CHARS,
+  MAX_QUOTE_CHARS,
   type QuoteDocument,
 } from "../../lib/types";
 import { revokeIfObjectUrl } from "../../lib/upload";
-import { clampToWordLimit, countLabel, countWords } from "../../lib/words";
+import { clampToCharLimit, countChars } from "../../lib/words";
 import Button from "../ui/Button.vue";
 import Input from "../ui/Input.vue";
 import Textarea from "../ui/Textarea.vue";
@@ -52,15 +53,17 @@ const activeTab = ref<PanelTab>("content");
 const activeTemplateId = ref<string | null>(null);
 const siteTheme = ref<SiteThemeId>("light");
 const shareBusy = ref(false);
+const shareCopied = ref(false);
+let shareCopiedTimer: ReturnType<typeof setTimeout> | null = null;
 
 const fittedExport = ref<FittedQuoteType | null>(null);
 
-const wordCount = computed(() => countWords(doc.text));
-const secondaryWordCount = computed(() => countWords(doc.textSecondary));
-const primaryUnitLabel = computed(() => countLabel(doc.text));
-const secondaryUnitLabel = computed(() => countLabel(doc.textSecondary));
-const atLimit = computed(() => wordCount.value >= MAX_WORDS);
-const secondaryAtLimit = computed(() => secondaryWordCount.value >= MAX_WORDS);
+const quoteCharCount = computed(() => countChars(doc.text));
+const secondaryCharCount = computed(() => countChars(doc.textSecondary));
+const authorCharCount = computed(() => countChars(doc.author));
+const atLimit = computed(() => quoteCharCount.value >= MAX_QUOTE_CHARS);
+const secondaryAtLimit = computed(() => secondaryCharCount.value >= MAX_QUOTE_CHARS);
+const authorAtLimit = computed(() => authorCharCount.value >= MAX_AUTHOR_CHARS);
 const layoutLabel = computed(() => LAYOUTS[doc.aspectRatio].label);
 
 const fittedDisplay = computed((): FittedQuoteType => {
@@ -160,7 +163,7 @@ function applyDeepLinkFromLocation() {
     doc.author = parsed.fields.author;
   }
   if (parsed.clamped) {
-    showToast(`Quote was shortened to ${MAX_WORDS} ${primaryUnitLabel.value}.`);
+    showToast(`Quote was shortened to ${MAX_QUOTE_CHARS} characters.`);
   } else if (parsed.fields.q || parsed.fields.author) {
     showToast("Quote loaded from link.");
   }
@@ -218,8 +221,15 @@ async function onCopyShareLink() {
       author: doc.author,
     });
     await navigator.clipboard.writeText(url);
-    showToast("Share link copied.");
+    shareCopied.value = true;
+    if (shareCopiedTimer) clearTimeout(shareCopiedTimer);
+    shareCopiedTimer = setTimeout(() => {
+      shareCopied.value = false;
+      shareCopiedTimer = null;
+    }, 2000);
+    showToast("Copied");
   } catch {
+    shareCopied.value = false;
     showToast("Could not copy link.");
   } finally {
     shareBusy.value = false;
@@ -255,6 +265,7 @@ onUnmounted(() => {
   ro?.disconnect();
   window.removeEventListener("resize", measureStage);
   if (fitTimer) clearTimeout(fitTimer);
+  if (shareCopiedTimer) clearTimeout(shareCopiedTimer);
   if (doc.background.type === "upload") {
     revokeIfObjectUrl(doc.background.objectUrl);
   }
@@ -299,18 +310,18 @@ function openHowto() {
 
 function onQuoteInput(value: string) {
   exportError.value = null;
-  doc.text = clampToWordLimit(value, MAX_WORDS);
+  doc.text = clampToCharLimit(value, MAX_QUOTE_CHARS);
   activeTemplateId.value = null;
 }
 
 function onSecondaryInput(value: string) {
   exportError.value = null;
-  doc.textSecondary = clampToWordLimit(value, MAX_WORDS);
+  doc.textSecondary = clampToCharLimit(value, MAX_QUOTE_CHARS);
 }
 
 function onAuthorInput(value: string) {
   exportError.value = null;
-  doc.author = value.slice(0, 120);
+  doc.author = clampToCharLimit(value, MAX_AUTHOR_CHARS);
 }
 
 function onLayout(key: AspectRatioKey) {
@@ -357,8 +368,8 @@ async function onDownload() {
     exportError.value = "Add a quote before exporting.";
     return;
   }
-  if (wordCount.value > MAX_WORDS) {
-    exportError.value = `Quotes are limited to ${MAX_WORDS} ${primaryUnitLabel.value}.`;
+  if (quoteCharCount.value > MAX_QUOTE_CHARS) {
+    exportError.value = `Quotes are limited to ${MAX_QUOTE_CHARS} characters.`;
     return;
   }
   recomputeFit();
@@ -399,15 +410,17 @@ const panelTabs = [
     -->
     <header class="z-30 shrink-0 border-b border-hairline bg-canvas">
       <div class="flex h-12 items-center gap-1.5 px-2 sm:gap-2 sm:px-3">
-        <div class="flex shrink-0 items-center gap-2 pl-0.5">
-          <span
-            class="flex size-7 shrink-0 items-center justify-center rounded-md bg-primary text-[0.75rem] font-semibold text-on-primary"
-            aria-hidden="true"
-          >
-            H
-          </span>
+        <a href="/" class="flex shrink-0 items-center gap-2 pl-0.5" title="Hmmm home">
+          <img
+            src="/favicon.svg"
+            alt=""
+            width="28"
+            height="28"
+            class="size-7 shrink-0 rounded-md"
+            decoding="async"
+          />
           <span class="hidden text-[0.875rem] font-medium tracking-tight tool:inline">Hmmm</span>
-        </div>
+        </a>
 
         <!-- Wide: layout in the middle -->
         <div class="hidden min-w-0 flex-1 justify-center px-2 tool:flex">
@@ -435,9 +448,10 @@ const panelTabs = [
             type="button"
             title="Copy a shareable link with this quote and author prefilled"
             :disabled="shareBusy || !doc.text.trim()"
+            :aria-live="shareCopied ? 'polite' : undefined"
             @click="onCopyShareLink"
           >
-            {{ shareBusy ? "…" : "Share" }}
+            {{ shareBusy ? "…" : shareCopied ? "Copied" : "Share" }}
           </Button>
           <Button variant="ghost" type="button" title="How to use" @click="openHowto">?</Button>
           <Button
@@ -532,7 +546,7 @@ const panelTabs = [
                 :class="atLimit ? 'text-accent-magenta' : 'text-ink/40'"
                 aria-live="polite"
               >
-                {{ wordCount }} / {{ MAX_WORDS }} {{ primaryUnitLabel }}
+                {{ quoteCharCount }} / {{ MAX_QUOTE_CHARS }}
               </p>
               <p v-if="atLimit" class="type-body-sm text-accent-magenta">Limit</p>
             </div>
@@ -552,7 +566,7 @@ const panelTabs = [
                 :class="secondaryAtLimit ? 'text-accent-magenta' : 'text-ink/40'"
                 aria-live="polite"
               >
-                {{ secondaryWordCount }} / {{ MAX_WORDS }} {{ secondaryUnitLabel }}
+                {{ secondaryCharCount }} / {{ MAX_QUOTE_CHARS }}
               </p>
               <p v-if="!doc.textSecondary.trim()" class="type-body-sm text-ink/35">
                 Hidden on image
@@ -568,6 +582,17 @@ const panelTabs = [
               autocomplete="off"
               @update:model-value="onAuthorInput"
             />
+
+            <div class="flex items-center justify-between gap-2 -mt-2">
+              <p
+                class="type-meta"
+                :class="authorAtLimit ? 'text-accent-magenta' : 'text-ink/40'"
+                aria-live="polite"
+              >
+                {{ authorCharCount }} / {{ MAX_AUTHOR_CHARS }}
+              </p>
+              <p v-if="authorAtLimit" class="type-body-sm text-accent-magenta">Limit</p>
+            </div>
 
             <div
               v-if="fittedExport?.overflow"

@@ -47,7 +47,10 @@ export interface QuoteDocument {
   scrimOpacity: number;
 }
 
-export const MAX_WORDS = 300;
+/** Hard cap for primary quote and optional translation (Unicode code points). */
+export const MAX_QUOTE_CHARS = 1300;
+/** Hard cap for author attribution. */
+export const MAX_AUTHOR_CHARS = 100;
 
 /** Secondary/translation line is smaller relative to primary (export design size). */
 export const SECONDARY_FONT_SCALE = 0.55;

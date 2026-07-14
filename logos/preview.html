@@ -69,7 +69,7 @@
       gap: 8px;
       align-items: center;
     }
-    .toolbar label {
+    .toolbar .toolbar-label {
       font-family: var(--mono);
       font-size: 0.7rem;
       letter-spacing: 0.05em;
@@ -264,7 +264,7 @@
   </header>
 
   <div class="toolbar" role="toolbar" aria-label="Background ground">
-    <label>Ground</label>
+    <span class="toolbar-label">Ground</span>
     <button type="button" data-ground="pair" aria-pressed="true">Light + Dark</button>
     <button type="button" data-ground="pastels" aria-pressed="false">Pastel blocks</button>
     <button type="button" data-ground="all" aria-pressed="false">All grounds</button>
@@ -457,7 +457,7 @@
       }
     }
 
-    let favorites = readFavorites();
+    const favorites = readFavorites();
 
     function showError(msg) {
       errorEl.textContent = msg;
@@ -470,7 +470,7 @@
 
       for (const s of SCHEMES) {
         const card = document.createElement("article");
-        card.className = "card" + (favorites.has(s.id) ? " favorite" : "");
+        card.className = `card${favorites.has(s.id) ? " favorite" : ""}`;
         card.dataset.id = s.id;
 
         const swatches = document.createElement("div");
@@ -486,21 +486,21 @@
         stages.style.gridTemplateColumns =
           grounds.length <= 2
             ? "1fr 1fr"
-            : "repeat(" + Math.min(grounds.length, 3) + ", 1fr)";
+            : `repeat(${Math.min(grounds.length, 3)}, 1fr)`;
 
         for (const g of grounds) {
           const stage = document.createElement("div");
-          stage.className = "stage " + g;
+          stage.className = `stage ${g}`;
 
           const tag = document.createElement("span");
           tag.className = "tag";
           tag.textContent = g;
 
           const img = document.createElement("img");
-          img.src = "variants/" + s.id + ".svg";
-          img.alt = s.label + " on " + g;
+          img.src = `variants/${s.id}.svg`;
+          img.alt = `${s.label} on ${g}`;
           img.loading = "lazy";
-          img.onerror = function () {
+          img.onerror = () => {
             showError(
               "Could not load logo SVGs from variants/. Keep preview.html next to the variants/ folder."
             );
@@ -522,7 +522,7 @@
         const fav = document.createElement("button");
         fav.type = "button";
         fav.textContent = favorites.has(s.id) ? "★ Fav" : "☆ Fav";
-        fav.addEventListener("click", function (e) {
+        fav.addEventListener("click", (e) => {
           e.preventDefault();
           e.stopPropagation();
           if (favorites.has(s.id)) favorites.delete(s.id);
@@ -566,11 +566,11 @@
       }
     }
 
-    document.querySelectorAll(".toolbar button[data-ground]").forEach(function (btn) {
-      btn.addEventListener("click", function (e) {
+    document.querySelectorAll(".toolbar button[data-ground]").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
         e.preventDefault();
         mode = btn.getAttribute("data-ground") || "pair";
-        document.querySelectorAll(".toolbar button[data-ground]").forEach(function (b) {
+        document.querySelectorAll(".toolbar button[data-ground]").forEach((b) => {
           b.setAttribute("aria-pressed", b === btn ? "true" : "false");
         });
         render();
@@ -580,7 +580,7 @@
     try {
       render();
     } catch (err) {
-      showError("Preview failed to render: " + (err && err.message ? err.message : err));
+      showError(`Preview failed to render: ${err?.message ? err.message : err}`);
       console.error(err);
     }
   </script>

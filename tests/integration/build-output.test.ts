@@ -47,6 +47,10 @@ describe("production dist output", () => {
     mustExist("icons/icon-512.png");
     mustExist("icons/icon-maskable-192.png");
     mustExist("icons/icon-maskable-512.png");
+    mustExist("icons/apple-touch-icon.png");
+    mustExist("favicon.svg");
+    mustExist("favicon.ico");
+    mustExist("logo.svg");
   });
 
   test("/create is a full editor page (keeps query params on static hosts)", () => {

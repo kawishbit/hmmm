@@ -61,10 +61,22 @@ onUnmounted(() => {
     role="dialog"
     aria-label="Install Hmmm"
   >
-    <p class="type-body font-medium text-ink">Install Hmmm</p>
-    <p class="type-body-sm mt-1 text-ink/60">
-      Add to your home screen for a full-screen, offline-friendly workspace.
-    </p>
+    <div class="flex items-start gap-3">
+      <img
+        src="/icons/icon-192.png"
+        alt=""
+        width="40"
+        height="40"
+        class="size-10 shrink-0 rounded-lg"
+        decoding="async"
+      />
+      <div class="min-w-0 flex-1">
+        <p class="type-body font-medium text-ink">Install Hmmm</p>
+        <p class="type-body-sm mt-1 text-ink/60">
+          Add to your home screen for a full-screen, offline-friendly workspace.
+        </p>
+      </div>
+    </div>
     <div class="mt-3 flex items-center justify-end gap-2">
       <button type="button" class="type-meta px-2 py-1 text-ink/50 hover:text-ink" @click="dismiss">
         Not now

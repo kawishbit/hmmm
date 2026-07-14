@@ -22,7 +22,7 @@ First public release of **Hmmm** — a full-screen PWA for framing quotes as sha
 ### Features
 
 - Excalidraw-style workspace: toolbar, side panel, live canvas
-- Quote + optional translation + author (300-unit hard cap)
+- Quote + optional translation (1300-character hard cap) + author (100-character hard cap)
 - Layouts: 1:1, 4:5, 9:16, 16:9, 2:1
 - Backgrounds: gallery, solids, gradients, local upload, blur, filters, scrim
 - Typography: curated fonts, weight, max size, align, colors

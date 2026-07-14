@@ -28,8 +28,8 @@ const {
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="Hmmm" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
-    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" sizes="180x180" />
     {pwaInfo && <Fragment set:html={pwaInfo.webManifest.linkTag} />}
     {!pwaInfo && <link rel="manifest" href="/site.webmanifest" />}
     <title>{title}</title>

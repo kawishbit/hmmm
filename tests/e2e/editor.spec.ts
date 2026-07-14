@@ -44,7 +44,7 @@ test.describe("Hmmm editor", () => {
     ).toBeVisible({ timeout: 10_000 });
   });
 
-  test("deep link prefills quote and author on /create", async ({ page }) => {
+  test("deep link prefills quote and author on /create (legacy plain)", async ({ page }) => {
     const q = encodeURIComponent("Deep link quote");
     const author = encodeURIComponent("Ada Lovelace");
     await page.goto(`/create?q=${q}&author=${author}`);

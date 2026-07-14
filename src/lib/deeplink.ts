@@ -1,5 +1,8 @@
-import { MAX_WORDS } from "./types";
-import { clampToWordLimit, countWords } from "./words";
+import { MAX_AUTHOR_CHARS, MAX_QUOTE_CHARS } from "./types";
+import { clampToCharLimit, countChars } from "./words";
+
+/** Prefix marks base64url-encoded share values (vs legacy plain-text params). */
+const B64_PREFIX = "b64.";
 
 export interface DeepLinkFields {
   q: string;
@@ -10,15 +13,43 @@ export interface ParseDeepLinkResult {
   fields: DeepLinkFields;
   /** True when a param was present but decode failed */
   malformed: boolean;
-  /** True when text was clamped to the word/char cap */
+  /** True when text was clamped to the char cap */
   clamped: boolean;
   /** True when query had q or author */
   hadParams: boolean;
 }
 
+/** UTF-8 string → base64url (no padding). */
+export function encodeShareValue(text: string): string {
+  const bytes = new TextEncoder().encode(text);
+  let binary = "";
+  for (const byte of bytes) {
+    binary += String.fromCharCode(byte);
+  }
+  const b64 = btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+  return `${B64_PREFIX}${b64}`;
+}
+
+/** Decode a share param: base64url (with prefix) or legacy plain text. */
+export function decodeShareValue(raw: string): string {
+  if (!raw.startsWith(B64_PREFIX)) {
+    return raw;
+  }
+  const b64url = raw.slice(B64_PREFIX.length);
+  if (!b64url) return "";
+  const padded = b64url.replace(/-/g, "+").replace(/_/g, "/");
+  const padLen = (4 - (padded.length % 4)) % 4;
+  const binary = atob(padded + "=".repeat(padLen));
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) {
+    bytes[i] = binary.charCodeAt(i);
+  }
+  return new TextDecoder().decode(bytes);
+}
+
 /**
  * Parse partner deep-link query params.
- * v1: `q` + `author` only. Values are plain text (never HTML).
+ * v1: `q` + `author` only. Values are plain text or `b64.` + base64url (never HTML).
  */
 export function parseDeepLinkSearch(search: string): ParseDeepLinkResult {
   const params = new URLSearchParams(search.startsWith("?") ? search.slice(1) : search);
@@ -32,11 +63,10 @@ export function parseDeepLinkSearch(search: string): ParseDeepLinkResult {
 
   if (params.has("q")) {
     try {
-      // URLSearchParams already decodes; still guard empty
-      const raw = params.get("q") ?? "";
-      const before = countWords(raw);
-      q = clampToWordLimit(raw, MAX_WORDS);
-      if (countWords(q) < before) clamped = true;
+      const raw = decodeShareValue(params.get("q") ?? "");
+      const before = countChars(raw);
+      q = clampToCharLimit(raw, MAX_QUOTE_CHARS);
+      if (countChars(q) < before) clamped = true;
     } catch {
       malformed = true;
       q = "";
@@ -45,7 +75,10 @@ export function parseDeepLinkSearch(search: string): ParseDeepLinkResult {
 
   if (params.has("author")) {
     try {
-      author = (params.get("author") ?? "").slice(0, 120);
+      const raw = decodeShareValue(params.get("author") ?? "");
+      const before = countChars(raw);
+      author = clampToCharLimit(raw, MAX_AUTHOR_CHARS);
+      if (countChars(author) < before) clamped = true;
     } catch {
       malformed = true;
       author = "";
@@ -60,13 +93,13 @@ export function parseDeepLinkSearch(search: string): ParseDeepLinkResult {
   };
 }
 
-/** Build a shareable relative path with q + author. */
+/** Build a shareable relative path with q + author (base64url-encoded). */
 export function buildDeepLinkPath(fields: { q: string; author: string }): string {
   const params = new URLSearchParams();
   const q = fields.q.trim();
   const author = fields.author.trim();
-  if (q) params.set("q", q);
-  if (author) params.set("author", author);
+  if (q) params.set("q", encodeShareValue(q));
+  if (author) params.set("author", encodeShareValue(author));
   const qs = params.toString();
   return qs ? `/?${qs}` : "/";
 }

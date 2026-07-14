@@ -10,7 +10,7 @@ export default defineConfig({
     vue(),
     AstroPWA({
       registerType: "autoUpdate",
-      includeAssets: ["favicon.svg", "favicon.ico", "icons/*.png", "backgrounds/*.svg"],
+      includeAssets: ["favicon.svg", "favicon.ico", "logo.svg", "icons/*.png", "backgrounds/*.svg"],
       manifest: {
         name: "Hmmm",
         short_name: "Hmmm",

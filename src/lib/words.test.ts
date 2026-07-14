@@ -1,34 +1,30 @@
 import { describe, expect, test } from "bun:test";
-import {
-  clampToWordLimit,
-  countLabel,
-  countWords,
-  detectCountMode,
-  detectTextDirection,
-} from "./words";
+import { clampToCharLimit, countChars, detectTextDirection } from "./words";
 
-describe("countWords", () => {
-  test("latin words", () => {
-    expect(countWords("hello world foo")).toBe(3);
-    expect(countLabel("hello world")).toBe("words");
+describe("countChars", () => {
+  test("latin characters", () => {
+    expect(countChars("hello")).toBe(5);
+    expect(countChars("hello world")).toBe(11);
   });
 
-  test("cjk uses character budget", () => {
-    const text = "春眠不觉晓处处闻啼鸟";
-    expect(detectCountMode(text)).toBe("chars");
-    expect(countWords(text)).toBe(Array.from(text).length);
-    expect(countLabel(text)).toBe("chars");
+  test("emoji counts as one code point", () => {
+    expect(countChars("🍎")).toBe(1);
+    expect(countChars("hi🍎")).toBe(3);
   });
 
-  test("clamp latin", () => {
-    const words = Array.from({ length: 10 }, (_, i) => `w${i}`).join(" ");
-    expect(countWords(clampToWordLimit(words, 5))).toBe(5);
+  test("cjk characters", () => {
+    const text = "春眠不觉晓";
+    expect(countChars(text)).toBe(5);
   });
 
-  test("clamp cjk", () => {
-    const text = "一二三四五六七八九十";
-    const clamped = clampToWordLimit(text, 5);
-    expect(countWords(clamped)).toBe(5);
+  test("clamp to limit", () => {
+    expect(clampToCharLimit("abcdefghij", 5)).toBe("abcde");
+    expect(clampToCharLimit("short", 100)).toBe("short");
+  });
+
+  test("clamp preserves under-limit text", () => {
+    const text = "exactly";
+    expect(clampToCharLimit(text, 7)).toBe(text);
   });
 });
 

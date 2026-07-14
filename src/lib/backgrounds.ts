@@ -217,7 +217,7 @@ export const GALLERY: GalleryItem[] = [
     src: "/backgrounds/photo-city-bokeh.jpg",
     textTone: "light",
     pack: "urban",
-  }
+  },
 ];
 
 export const SOLID_PRESETS: SolidPreset[] = [
