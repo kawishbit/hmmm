@@ -217,14 +217,7 @@ export const GALLERY: GalleryItem[] = [
     src: "/backgrounds/photo-city-bokeh.jpg",
     textTone: "light",
     pack: "urban",
-  },
-  {
-    id: "photo-soft-gradient.jpg",
-    label: "Soft gradient",
-    src: "/backgrounds/photo-soft-gradient.jpg",
-    textTone: "light",
-    pack: "abstract",
-  },
+  }
 ];
 
 export const SOLID_PRESETS: SolidPreset[] = [

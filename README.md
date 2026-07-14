@@ -1,140 +1,144 @@
-# Hmmm
+<!-- PROJECT BANNER -->
+<p align="center">
+  <img src="logos/banners/banner.png" alt="Hmmm — full-screen quote image maker" width="100%" />
+</p>
 
-Full-screen quote image maker — type a quote, pick a layout, download a PNG. No account.  
-**Installable PWA** with offline support for the editor shell and gallery.
+<h1 align="center">Hmmm</h1>
 
-## Stack
+<p align="center">
+  <strong>Full-screen quote image maker</strong> — type a quote, pick a layout, download a PNG.<br />
+  Installable PWA · no account · no backend required.
+</p>
 
-- **Astro** (static) + **Vue** islands (`client:only`)
-- **Tailwind CSS** v4 · **TypeScript** · **Bun** · **Node** ≥ 22.12
-- **Vercel** (static) or **Docker / nginx** (self-host)
-- **PWA:** `@vite-pwa/astro` + Workbox
-- Text fit: [@chenglou/pretext](https://github.com/chenglou/pretext)
-- Tokens from [DESIGN.md](./DESIGN.md)
+<p align="center">
+  <a href="#getting-started">Getting started</a>
+  ·
+  <a href="#usage">Usage</a>
+  ·
+  <a href="#self-hosting">Self-hosting</a>
+  ·
+  <a href="#deep-links">Deep links</a>
+  ·
+  <a href="#license">License</a>
+</p>
 
-## Status
+<p align="center">
+  <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-ff3d8b?style=flat-square" />
+  <img alt="License" src="https://img.shields.io/badge/license-MIT-0a0a0a?style=flat-square" />
+  <img alt="Node" src="https://img.shields.io/badge/node-%3E%3D22.12-black?style=flat-square" />
+  <img alt="PWA" src="https://img.shields.io/badge/PWA-installable-1f1d3d?style=flat-square" />
+  <img alt="Stack" src="https://img.shields.io/badge/Astro%20%2B%20Vue%20%2B%20Tailwind-f7f7f5?style=flat-square&labelColor=0a0a0a" />
+</p>
 
-| Phase | Focus | Status |
-|-------|--------|--------|
-| 0–5 | Product + PWA | **Complete** |
-| 6 | Unit tests (meaningful only) | **Complete** |
-| 7 | Integration + e2e | **Complete** |
-| 8 | Self-hosting (local / Vercel / Docker) | **Complete** |
-| 9 | Curated local backgrounds (zero backend) | **Complete** — [plans/phase-9-curated-backgrounds.md](./plans/phase-9-curated-backgrounds.md) |
+<br />
 
-**v1.0.0** — [CHANGELOG.md](./CHANGELOG.md) · Full plan: [plans/PLAN.md](./plans/PLAN.md)
+## About
 
-### Backgrounds (zero backend)
+**Hmmm** is a static, privacy-friendly tool for turning quotes into shareable images. It runs entirely in the browser: write text, choose a layout and background, tweak type, and export a PNG. There is no login, no database, and no server-side image storage.
 
-- **Gallery:** local SVGs + photo packs (Abstract, Nature, Texture, Urban, Dark, Paper) in `public/backgrounds/`
-- **Upload:** drag-and-drop or file picker — stays on the device; never sent to a server
-- **No** stock APIs, **no** paste-image-URL (avoids CORS export issues)
-- Credits: [public/backgrounds/CREDITS.md](./public/backgrounds/CREDITS.md)
+Built as an Excalidraw-style workspace (toolbar + side panel + live stage) and shippable as an installable PWA with offline support for the editor shell and gallery.
 
----
+### Features
 
-## Self-hosting
+- **Quote editor** — primary text, optional translation, and author (hard cap: 300 words/units)
+- **Layouts** — 1:1, 4:5, 9:16, 16:9, 2:1 with auto type-fit via [pretext](https://github.com/chenglou/pretext)
+- **Backgrounds** — curated local gallery (SVG + photo packs), solids, gradients, blur, filters, scrim
+- **Upload** — drag-and-drop or file picker; images stay on the device (never uploaded)
+- **Typography** — curated fonts, weight, size, alignment, and colors
+- **Templates** — quick-start compositions (Tpl tab)
+- **Site themes** — Light, Dark, Mint, Lilac, Navy (chrome only; quote canvas is independent)
+- **Export** — download a PNG of the frame
+- **Deep links** — prefill from partners with `/create?q=&author=`
+- **PWA** — installable, offline shell + cached backgrounds, update prompt
 
-Hmmm is a **static** site (`dist/`). No database, no server-side API. Choose one of the three paths below.
+### Built with
 
-### 1. Local (development)
+| Layer | Choice |
+|-------|--------|
+| App shell | [Astro](https://astro.build) (static) + [Vue](https://vuejs.org) islands |
+| Styles | [Tailwind CSS](https://tailwindcss.com) v4 · tokens in [DESIGN.md](./DESIGN.md) |
+| Language | TypeScript |
+| Tooling | [Bun](https://bun.sh) (preferred) · Node ≥ 22.12 |
+| Text fit | [@chenglou/pretext](https://github.com/chenglou/pretext) |
+| Export | [html-to-image](https://github.com/bubkoo/html-to-image) |
+| PWA | `@vite-pwa/astro` + Workbox |
+| Deploy | Vercel static · Docker / nginx · any static host |
 
-**Requirements:** [Bun](https://bun.sh) (recommended) or Node ≥ 22.12 + npm/pnpm.
+<p align="right">(<a href="#about">back to top</a>)</p>
+
+## Getting started
+
+### Prerequisites
+
+- [Bun](https://bun.sh) **or** Node.js ≥ **22.12** (npm / pnpm also work)
+- For e2e tests only: Playwright Chromium (`bunx playwright install chromium`)
+
+### Installation
 
 ```bash
-# Clone
-git clone <your-repo-url> hmmm
+git clone https://github.com/kawishbit/hmmm.git
 cd hmmm
 
-# Install dependencies
 bun install
 # or: npm install / pnpm install
 
-# Dev server (hot reload)
 bun run dev
 ```
 
 Open the URL Astro prints (usually `http://localhost:4321`).
 
-**Production-like local serve:**
+**Production-like local preview:**
 
 ```bash
 bun run build
 bun run preview
-# or: bunx astro preview --host 127.0.0.1 --port 4321
 ```
 
-**Useful checks:**
+<p align="right">(<a href="#about">back to top</a>)</p>
 
-```bash
-bun run check          # TypeScript / Astro
-bun run test:unit      # Unit tests
-bun run test:integration
-bun run test:e2e       # needs Playwright browsers once: bunx playwright install chromium
-```
-
-### 2. Vercel
-
-Still the easiest cloud path for this static app.
-
-1. Import the repo in [Vercel](https://vercel.com).
-2. Framework: **Other** / static (or leave auto).
-3. Build command: `bun run build` (see `vercel.json`).
-4. Output directory: `dist`.
-5. Node version: **22** (`.nvmrc` / `engines`).
-
-Install Bun on Vercel via project settings or use:
-
-```bash
-# vercel.json already sets installCommand: bun install
-```
-
-Cache headers for hashed assets and the service worker are defined in `vercel.json`.
-
-### 3. Docker
-
-Multi-stage image: build with Bun, serve with **nginx** (see `Dockerfile`, `deploy/nginx.conf`).
-
-```bash
-# Build image
-docker build -t hmmm:latest .
-
-# Run (http://localhost:8080)
-docker run --rm -p 8080:80 hmmm:latest
-```
-
-**Docker Compose:**
-
-```bash
-docker compose up --build -d
-# App: http://localhost:8080
-```
-
-Stop:
-
-```bash
-docker compose down
-```
-
-The container only serves static files from `dist/`. PWA / HTTPS: terminate TLS at your reverse proxy (Caddy, Traefik, cloud LB) in front of the container.
-
-### Reverse proxy notes (optional)
-
-- Prefer HTTPS in production (required for full PWA install on most mobile browsers).
-- Do not long-cache `/sw.js` or `*.webmanifest` (nginx config already uses `must-revalidate`).
-- `/create?q=…&author=…` deep links work; both `/` and `/create` are real app pages.
-
----
-
-## UX model
+## Usage
 
 | Region | Role |
 |--------|------|
 | **Top toolbar** | Logo, layout, theme, share link, help, download |
-| **Left panel** | Text · Type · Bg · Tpl |
+| **Left panel** | **Text** · **Type** · **Bg** · **Tpl** |
 | **Center stage** | Live quote frame |
 
-## Integrating with Hmmm
+### Typical flow
+
+1. Open `/` (or `/create` from a deep link).
+2. Enter quote text (and optional author / translation).
+3. Pick a layout that fits the length.
+4. Choose a gallery background, solid/gradient, or upload your own.
+5. Adjust type, then **Download** a PNG.
+
+### Routes
+
+| Path | Page |
+|------|------|
+| `/` | Editor |
+| `/create` | Editor (partner deep-link entry) |
+| unknown | On-brand 404 |
+
+### Scripts
+
+| Command | Description |
+|---------|-------------|
+| `bun run dev` | Dev server (hot reload) |
+| `bun run build` | Production static build → `dist/` (+ service worker) |
+| `bun run preview` | Preview production build |
+| `bun run check` | Astro + TypeScript checks |
+| `bun run test:unit` | Unit tests (`src/**/*.test.ts`) |
+| `bun run test:integration` | Build + `dist/` contract tests |
+| `bun run test:e2e` | Build + Playwright browser tests |
+| `bun run test:all` | Unit + integration + e2e |
+| `bun run lint` | Biome lint |
+
+<p align="right">(<a href="#about">back to top</a>)</p>
+
+## Deep links
+
+Prefill the editor from another site (plain text only; 300-unit cap):
 
 ```html
 <a href="https://your-host.example/create?q=Stay%20hungry&amp;author=Steve%20Jobs">
@@ -147,36 +151,97 @@ The container only serves static files from `dist/`. PWA / HTTPS: terminate TLS 
 | `q` | Quote text |
 | `author` | Author name |
 
-Plain text only; 300-unit cap; use **Link** in the app to copy a share URL.
+Use **Link** in the app toolbar to copy a shareable URL for the current quote.
 
-## Scripts
+<p align="right">(<a href="#about">back to top</a>)</p>
 
-| Command | Description |
-|---------|-------------|
-| `bun run dev` | Dev server |
-| `bun run build` | Production static build → `dist/` (+ service worker) |
-| `bun run preview` | Preview production build |
-| `bun run check` | Astro + TypeScript checks |
-| `bun run test:unit` | Unit tests (`src/**/*.test.ts`) |
-| `bun run test:integration` | Build + dist contract tests |
-| `bun run test:e2e` | Build + Playwright browser tests |
-| `bun run test:all` | Unit + integration + e2e |
-| `bun run lint` | Biome lint |
+## Self-hosting
 
-## Routes
+Hmmm is a **static** site (`dist/`). No database, no server-side API.
 
-| Path | Page |
-|------|------|
-| `/` | Editor |
-| `/create` | Editor (partner deep-link entry) |
-| (unknown) | On-brand 404 |
+### Vercel
 
-## Constraints
+1. Import the repo in [Vercel](https://vercel.com).
+2. Framework: **Other** / static (or leave auto-detect).
+3. Build command: `bun run build` (see `vercel.json`).
+4. Output directory: `dist`.
+5. Node version: **22** (`.nvmrc` / `engines`).
+
+Cache headers for hashed assets and the service worker are defined in `vercel.json`.
+
+### Docker
+
+Multi-stage image: build with Bun, serve with **nginx** (`Dockerfile`, `deploy/nginx.conf`).
+
+```bash
+docker build -t hmmm:latest .
+docker run --rm -p 8080:80 hmmm:latest
+# → http://localhost:8080
+```
+
+**Compose:**
+
+```bash
+docker compose up --build -d
+# → http://localhost:8080
+
+docker compose down
+```
+
+### Reverse proxy notes
+
+- Prefer **HTTPS** in production (required for full PWA install on most mobile browsers).
+- Do not long-cache `/sw.js` or `*.webmanifest` (nginx already uses `must-revalidate`).
+- `/create?q=…&author=…` deep links work; `/` and `/create` are real app pages.
+
+<p align="right">(<a href="#about">back to top</a>)</p>
+
+## Backgrounds (zero backend)
+
+- **Gallery** — local SVGs + photo packs (Abstract, Nature, Texture, Urban, Dark, Paper) in `public/backgrounds/`
+- **Upload** — stays on the device; never sent to a server
+- **No** stock photo APIs, **no** paste-image-URL (avoids CORS export issues)
+- Credits: [public/backgrounds/CREDITS.md](./public/backgrounds/CREDITS.md)
+
+## Project status
+
+**v1.0.0** — first public release. See [CHANGELOG.md](./CHANGELOG.md).
+
+| Phase | Focus | Status |
+|-------|--------|--------|
+| 0–5 | Product + PWA | Complete |
+| 6 | Unit tests | Complete |
+| 7 | Integration + e2e | Complete |
+| 8 | Self-hosting (local / Vercel / Docker) | Complete |
+| 9 | Curated local backgrounds | Complete |
+
+Full plan: [plans/PLAN.md](./plans/PLAN.md).
+
+### Constraints (by design)
 
 - No login / authentication  
 - No database  
 - Hard cap: **300 words/units** per quote field  
 
+## Brand assets
+
+Logo and repository banner live under [`logos/`](./logos/):
+
+| Asset | Path |
+|-------|------|
+| Banner (3:1) | [`logos/banners/banner.png`](./logos/banners/banner.png) |
+| Logo (SVG / PNG) | [`logos/logo.svg`](./logos/logo.svg) · [`logos/logo.png`](./logos/logo.png) |
+
 ## License
 
-See [LICENSE](./LICENSE). Background assets: [public/backgrounds/CREDITS.md](./public/backgrounds/CREDITS.md).
+Distributed under the **MIT** License. See [LICENSE](./LICENSE).
+
+Background photography and textures: [public/backgrounds/CREDITS.md](./public/backgrounds/CREDITS.md).
+
+## Acknowledgments
+
+- [Cheng Lou — pretext](https://github.com/chenglou/pretext) for layout-aware text measurement
+- [Astro](https://astro.build), [Vue](https://vuejs.org), [Tailwind CSS](https://tailwindcss.com), [Vite PWA](https://vite-pwa-org.netlify.app/)
+- Design tokens and editorial system documented in [DESIGN.md](./DESIGN.md)
+
+<p align="right">(<a href="#about">back to top</a>)</p>

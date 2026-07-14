@@ -1,0 +1,146 @@
+[
+  {
+    "id": "01-original",
+    "label": "Original",
+    "note": "Charcoal stack + amber bars (source)",
+    "back": "#6f6f6f",
+    "mid": "#4b4b4b",
+    "front": "#292929",
+    "accent": "#ffb200"
+  },
+  {
+    "id": "02-brand-magenta",
+    "label": "Brand Magenta",
+    "note": "Charcoal + site accent-magenta",
+    "back": "#6f6f6f",
+    "mid": "#4b4b4b",
+    "front": "#292929",
+    "accent": "#ff3d8b"
+  },
+  {
+    "id": "03-editorial-black",
+    "label": "Editorial Black",
+    "note": "Pure black monochrome \u2014 DESIGN.md ink",
+    "back": "#3a3a3a",
+    "mid": "#1a1a1a",
+    "front": "#000000",
+    "accent": "#000000"
+  },
+  {
+    "id": "04-amber-lift",
+    "label": "Amber Lift",
+    "note": "Same stack, warmer amber accent",
+    "back": "#6f6f6f",
+    "mid": "#4b4b4b",
+    "front": "#292929",
+    "accent": "#ff9500"
+  },
+  {
+    "id": "05-gold-signal",
+    "label": "Gold Signal",
+    "note": "Deeper charcoal + bright gold",
+    "back": "#5c5c5c",
+    "mid": "#3a3a3a",
+    "front": "#1a1a1a",
+    "accent": "#f5c518"
+  },
+  {
+    "id": "06-mint",
+    "label": "Mint",
+    "note": "Forest depth + mint accent (site mint theme)",
+    "back": "#5a7a66",
+    "mid": "#2f4a3a",
+    "front": "#14261c",
+    "accent": "#7dcea0"
+  },
+  {
+    "id": "07-lilac",
+    "label": "Lilac",
+    "note": "Violet depth + lilac accent (site lilac theme)",
+    "back": "#7a6a9a",
+    "mid": "#3d3258",
+    "front": "#1f1830",
+    "accent": "#c5b0f4"
+  },
+  {
+    "id": "08-navy",
+    "label": "Navy",
+    "note": "Navy stack + cream bars (site navy theme)",
+    "back": "#3a3860",
+    "mid": "#28264a",
+    "front": "#1f1d3d",
+    "accent": "#f4ecd6"
+  },
+  {
+    "id": "09-lime-pop",
+    "label": "Lime Pop",
+    "note": "Ink stack + block-lime accent",
+    "back": "#4a4a4a",
+    "mid": "#2a2a2a",
+    "front": "#111111",
+    "accent": "#c5e06a"
+  },
+  {
+    "id": "10-coral",
+    "label": "Coral",
+    "note": "Warm brown stack + coral accent",
+    "back": "#8a6a5a",
+    "mid": "#5a3a2e",
+    "front": "#2a1810",
+    "accent": "#f3c9b6"
+  },
+  {
+    "id": "11-ink-void",
+    "label": "Ink Void",
+    "note": "Near-black stack + pure white bars",
+    "back": "#3d3d3d",
+    "mid": "#222222",
+    "front": "#0a0a0a",
+    "accent": "#ffffff"
+  },
+  {
+    "id": "12-soft-grey",
+    "label": "Soft Grey",
+    "note": "Lighter greys + muted gold (subtle UI)",
+    "back": "#a0a0a0",
+    "mid": "#787878",
+    "front": "#505050",
+    "accent": "#d4a017"
+  },
+  {
+    "id": "13-mono-white",
+    "label": "Mono White",
+    "note": "Light stack for dark backgrounds",
+    "back": "#9a9a9a",
+    "mid": "#d0d0d0",
+    "front": "#f5f5f5",
+    "accent": "#ffb200"
+  },
+  {
+    "id": "14-magenta-full",
+    "label": "Magenta Full",
+    "note": "Tinted magenta body + hot accent",
+    "back": "#c45a8a",
+    "mid": "#8a2a55",
+    "front": "#4a1028",
+    "accent": "#ff3d8b"
+  },
+  {
+    "id": "15-dual-tone",
+    "label": "Dual Tone",
+    "note": "Cool grey body + electric blue accent",
+    "back": "#6a7280",
+    "mid": "#3d4450",
+    "front": "#1a1f28",
+    "accent": "#3b82f6"
+  },
+  {
+    "id": "16-sunset",
+    "label": "Sunset",
+    "note": "Warm charcoal + magenta\u2192amber hybrid feel",
+    "back": "#6f5a4a",
+    "mid": "#4a3528",
+    "front": "#281810",
+    "accent": "#ff6b2c"
+  }
+]

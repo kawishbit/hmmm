@@ -1,0 +1,92 @@
+[
+  {
+    "id": "01-editorial-light",
+    "label": "Editorial Light",
+    "note": "White canvas, black type, amber rule \u2014 DESIGN.md editorial",
+    "size": "2400\u00d7800",
+    "ratio": "3:1",
+    "name": "Hmmm",
+    "description": "Full-screen quote image maker \u2014 type a quote, pick a layout, download a PNG. No account."
+  },
+  {
+    "id": "02-ink-void",
+    "label": "Ink Void",
+    "note": "Near-black field, amber spine, light type",
+    "size": "2400\u00d7800",
+    "ratio": "3:1",
+    "name": "Hmmm",
+    "description": "Full-screen quote image maker \u2014 type a quote, pick a layout, download a PNG. No account."
+  },
+  {
+    "id": "03-lime-block",
+    "label": "Lime Block",
+    "note": "Sticky-note lime frame with white card",
+    "size": "2400\u00d7800",
+    "ratio": "3:1",
+    "name": "Hmmm",
+    "description": "Full-screen quote image maker \u2014 type a quote, pick a layout, download a PNG. No account."
+  },
+  {
+    "id": "04-navy-dusk",
+    "label": "Navy Dusk",
+    "note": "Deep navy + cream title, lilac meta",
+    "size": "2400\u00d7800",
+    "ratio": "3:1",
+    "name": "Hmmm",
+    "description": "Full-screen quote image maker \u2014 type a quote, pick a layout, download a PNG. No account."
+  },
+  {
+    "id": "05-magenta-accent",
+    "label": "Magenta Accent",
+    "note": "Soft canvas with bold brand-magenta wedge",
+    "size": "2400\u00d7800",
+    "ratio": "3:1",
+    "name": "Hmmm",
+    "description": "Full-screen quote image maker \u2014 type a quote, pick a layout, download a PNG. No account."
+  },
+  {
+    "id": "06-split-panel",
+    "label": "Split Panel",
+    "note": "Logo on black half, type on white half",
+    "size": "2400\u00d7800",
+    "ratio": "3:1",
+    "name": "Hmmm",
+    "description": "Full-screen quote image maker \u2014 type a quote, pick a layout, download a PNG. No account."
+  },
+  {
+    "id": "07-lilac-bloom",
+    "label": "Lilac Bloom",
+    "note": "Lilac field with navy footer bar",
+    "size": "2400\u00d7800",
+    "ratio": "3:1",
+    "name": "Hmmm",
+    "description": "Full-screen quote image maker \u2014 type a quote, pick a layout, download a PNG. No account."
+  },
+  {
+    "id": "08-minimal-center",
+    "label": "Minimal Center",
+    "note": "Centered mark + type, soft surface card",
+    "size": "2400\u00d7800",
+    "ratio": "3:1",
+    "name": "Hmmm",
+    "description": "Full-screen quote image maker \u2014 type a quote, pick a layout, download a PNG. No account."
+  },
+  {
+    "id": "09-cream-paper",
+    "label": "Cream Paper",
+    "note": "Warm cream ground, ink rule, editorial type",
+    "size": "2400\u00d7800",
+    "ratio": "3:1",
+    "name": "Hmmm",
+    "description": "Full-screen quote image maker \u2014 type a quote, pick a layout, download a PNG. No account."
+  },
+  {
+    "id": "10-watermark-quote",
+    "label": "Watermark Quote",
+    "note": "Giant quote mark watermark behind type",
+    "size": "2400\u00d7800",
+    "ratio": "3:1",
+    "name": "Hmmm",
+    "description": "Full-screen quote image maker \u2014 type a quote, pick a layout, download a PNG. No account."
+  }
+]

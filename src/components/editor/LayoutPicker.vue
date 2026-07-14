@@ -50,7 +50,7 @@ function frameStyle(ratio: number) {
       @click="$emit('update:modelValue', layout.key)"
     >
       <span
-        class="inline-block shrink-0 rounded-[2px] border border-current opacity-70"
+        class="inline-block shrink-0 rounded-xs border border-current opacity-70"
         :style="frameStyle(layout.ratio)"
         aria-hidden="true"
       />
