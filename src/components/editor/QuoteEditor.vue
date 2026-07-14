@@ -391,7 +391,7 @@ const panelTabs = [
 </script>
 
 <template>
-  <div class="flex h-dvh w-full min-w-[320px] flex-col overflow-hidden bg-canvas">
+  <div class="flex h-dvh w-full min-w-80 flex-col overflow-hidden bg-canvas">
     <!--
       Breakpoint `tool` = 850px (see global.css --breakpoint-tool):
       - ≤850px: Edit toggle, collapsible sidebar, layout+theme on second row
@@ -457,7 +457,7 @@ const panelTabs = [
         class="flex items-center gap-2 border-t border-hairline-soft px-2 py-1.5 tool:hidden"
       >
         <div
-          class="min-w-0 flex-1 overflow-x-auto overscroll-x-contain [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          class="min-w-0 flex-1 overflow-x-auto overscroll-x-contain [-ms-overflow-style:none] scrollbar-none [&::-webkit-scrollbar]:hidden"
         >
           <LayoutPicker
             class="w-max max-w-none"
@@ -475,7 +475,7 @@ const panelTabs = [
 
     <div class="relative flex min-h-0 flex-1">
       <aside
-        class="z-20 flex w-full shrink-0 flex-col border-r border-hairline bg-canvas tool:w-72 xl:w-[20.5rem]"
+        class="z-20 flex w-full shrink-0 flex-col border-r border-hairline bg-canvas tool:w-72 xl:w-82"
         :class="
           panelOpen
             ? 'absolute inset-y-0 left-0 shadow-lg tool:static tool:shadow-none'

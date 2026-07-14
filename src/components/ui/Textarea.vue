@@ -22,7 +22,7 @@ defineEmits<{
       :placeholder="placeholder"
       :rows="rows ?? 5"
       :disabled="disabled"
-      class="type-body min-h-[8rem] w-full flex-1 resize-none rounded-md border border-hairline bg-canvas px-3 py-2 text-ink placeholder:text-ink/30 disabled:opacity-50"
+      class="type-body min-h-32 w-full flex-1 resize-none rounded-md border border-hairline bg-canvas px-3 py-2 text-ink placeholder:text-ink/30 disabled:opacity-50"
       @input="$emit('update:modelValue', ($event.target as HTMLTextAreaElement).value)"
     />
   </label>

@@ -46,7 +46,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="pointer-events-none fixed top-14 right-0 left-0 z-[60] flex flex-col items-center gap-2 px-3">
+  <div class="pointer-events-none fixed top-14 right-0 left-0 z-60 flex flex-col items-center gap-2 px-3">
     <div
       v-if="offline"
       class="pointer-events-auto rounded-pill border border-hairline bg-canvas px-3 py-1.5 shadow-md"

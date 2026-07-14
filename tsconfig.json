@@ -1,13 +1,12 @@
 {
   "extends": "astro/tsconfigs/strict",
   "include": [".astro/types.d.ts", "**/*"],
-  "exclude": ["dist", "**/*.test.ts", "tests/e2e", "playwright.config.ts"],
+  "exclude": ["dist", "tests/e2e", "playwright.config.ts"],
   "compilerOptions": {
     "jsx": "preserve",
-    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./src/*"]
     },
-    "types": ["node"]
+    "types": ["node", "bun"]
   }
 }

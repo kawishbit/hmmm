@@ -147,7 +147,7 @@ const scrimOpacity = computed(() => Math.min(0.85, Math.max(0, props.document.sc
         }"
       >
         <p
-          class="m-0 whitespace-pre-wrap break-words"
+          class="m-0 whitespace-pre-wrap wrap-break-word"
           :style="{
             fontSize: `${fitted.primarySize}px`,
             fontWeight,
@@ -160,7 +160,7 @@ const scrimOpacity = computed(() => Math.min(0.85, Math.max(0, props.document.sc
 
         <p
           v-if="hasSecondary && fitted.secondarySize"
-          class="m-0 whitespace-pre-wrap break-words"
+          class="m-0 whitespace-pre-wrap wrap-break-word"
           :style="{
             marginTop: `${Math.round(fitted.gapPrimarySecondary)}px`,
             fontSize: `${fitted.secondarySize}px`,

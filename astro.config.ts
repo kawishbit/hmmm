@@ -1,4 +1,3 @@
-// @ts-check
 import vue from "@astrojs/vue";
 import tailwindcss from "@tailwindcss/vite";
 import AstroPWA from "@vite-pwa/astro";

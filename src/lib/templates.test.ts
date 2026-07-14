@@ -39,8 +39,8 @@ describe("applyTemplate", () => {
   test("empty document fills sample when fillSample defaults", () => {
     const t = requireTemplate("bold-sans");
     const next = applyTemplate(baseDoc({ text: "", author: "" }), t);
-    expect(next.text).toBe(t.sampleText);
-    expect(next.author).toBe(t.sampleAuthor);
+    expect(next.text).toBe(t.sampleText ?? "");
+    expect(next.author).toBe(t.sampleAuthor ?? "");
     expect(next.style.fontWeight).toBe(700);
   });
 
@@ -58,7 +58,7 @@ describe("applyTemplate", () => {
       fillSample: true,
       preserveText: false,
     });
-    expect(next.text).toBe(t.sampleText);
-    expect(next.author).toBe(t.sampleAuthor);
+    expect(next.text).toBe(t.sampleText ?? "");
+    expect(next.author).toBe(t.sampleAuthor ?? "");
   });
 });
