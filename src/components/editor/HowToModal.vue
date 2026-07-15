@@ -44,7 +44,7 @@ const steps = [
   {
     n: "01",
     title: "Write or open a link",
-    body: "Text tab for quote + author, or open /create?q=…&author=… from a partner site.",
+    body: "Text tab for quote + optional translation + author, or open /create?q=…&q2=…&author=… from a partner site.",
   },
   {
     n: "02",

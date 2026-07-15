@@ -159,12 +159,15 @@ function applyDeepLinkFromLocation() {
   if (parsed.fields.q) {
     doc.text = parsed.fields.q;
   }
+  if (parsed.fields.q2) {
+    doc.textSecondary = parsed.fields.q2;
+  }
   if (parsed.fields.author) {
     doc.author = parsed.fields.author;
   }
   if (parsed.clamped) {
     showToast(`Quote was shortened to ${MAX_QUOTE_CHARS} characters.`);
-  } else if (parsed.fields.q || parsed.fields.author) {
+  } else if (parsed.fields.q || parsed.fields.q2 || parsed.fields.author) {
     showToast("Quote loaded from link.");
   }
   clearDeepLinkFromUrl();
@@ -218,6 +221,7 @@ async function onCopyShareLink() {
   try {
     const url = buildDeepLinkAbsolute(window.location.origin, {
       q: doc.text,
+      q2: doc.textSecondary,
       author: doc.author,
     });
     await navigator.clipboard.writeText(url);

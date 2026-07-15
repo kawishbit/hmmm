@@ -6,6 +6,8 @@ const B64_PREFIX = "b64.";
 
 export interface DeepLinkFields {
   q: string;
+  /** Optional second quote / translation */
+  q2: string;
   author: string;
 }
 
@@ -15,7 +17,7 @@ export interface ParseDeepLinkResult {
   malformed: boolean;
   /** True when text was clamped to the char cap */
   clamped: boolean;
-  /** True when query had q or author */
+  /** True when query had q, q2, or author */
   hadParams: boolean;
 }
 
@@ -49,16 +51,18 @@ export function decodeShareValue(raw: string): string {
 
 /**
  * Parse partner deep-link query params.
- * v1: `q` + `author` only. Values are plain text or `b64.` + base64url (never HTML).
+ * Params: `q` (primary quote), `q2` (optional translation / second line), `author`.
+ * Values are plain text or `b64.` + base64url (never HTML).
  */
 export function parseDeepLinkSearch(search: string): ParseDeepLinkResult {
   const params = new URLSearchParams(search.startsWith("?") ? search.slice(1) : search);
 
   let malformed = false;
   let clamped = false;
-  const hadParams = params.has("q") || params.has("author");
+  const hadParams = params.has("q") || params.has("q2") || params.has("author");
 
   let q = "";
+  let q2 = "";
   let author = "";
 
   if (params.has("q")) {
@@ -70,6 +74,18 @@ export function parseDeepLinkSearch(search: string): ParseDeepLinkResult {
     } catch {
       malformed = true;
       q = "";
+    }
+  }
+
+  if (params.has("q2")) {
+    try {
+      const raw = decodeShareValue(params.get("q2") ?? "");
+      const before = countChars(raw);
+      q2 = clampToCharLimit(raw, MAX_QUOTE_CHARS);
+      if (countChars(q2) < before) clamped = true;
+    } catch {
+      malformed = true;
+      q2 = "";
     }
   }
 
@@ -86,19 +102,21 @@ export function parseDeepLinkSearch(search: string): ParseDeepLinkResult {
   }
 
   return {
-    fields: { q, author },
+    fields: { q, q2, author },
     malformed,
     clamped,
     hadParams,
   };
 }
 
-/** Build a shareable relative path with q + author (base64url-encoded). */
-export function buildDeepLinkPath(fields: { q: string; author: string }): string {
+/** Build a shareable relative path with q, optional q2, and author (base64url-encoded). */
+export function buildDeepLinkPath(fields: { q: string; q2?: string; author: string }): string {
   const params = new URLSearchParams();
   const q = fields.q.trim();
+  const q2 = (fields.q2 ?? "").trim();
   const author = fields.author.trim();
   if (q) params.set("q", encodeShareValue(q));
+  if (q2) params.set("q2", encodeShareValue(q2));
   if (author) params.set("author", encodeShareValue(author));
   const qs = params.toString();
   return qs ? `/?${qs}` : "/";
@@ -106,7 +124,7 @@ export function buildDeepLinkPath(fields: { q: string; author: string }): string
 
 export function buildDeepLinkAbsolute(
   origin: string,
-  fields: { q: string; author: string },
+  fields: { q: string; q2?: string; author: string },
 ): string {
   const path = buildDeepLinkPath(fields);
   const base = origin.replace(/\/$/, "");
@@ -120,8 +138,15 @@ export function buildDeepLinkAbsolute(
 export function clearDeepLinkFromUrl() {
   if (typeof window === "undefined") return;
   const url = new URL(window.location.href);
-  if (!url.searchParams.has("q") && !url.searchParams.has("author")) return;
+  if (
+    !url.searchParams.has("q") &&
+    !url.searchParams.has("q2") &&
+    !url.searchParams.has("author")
+  ) {
+    return;
+  }
   url.searchParams.delete("q");
+  url.searchParams.delete("q2");
   url.searchParams.delete("author");
   const next =
     url.pathname + (url.searchParams.toString() ? `?${url.searchParams}` : "") + url.hash;

@@ -28,7 +28,7 @@ First public release of **Hmmm** — a full-screen PWA for framing quotes as sha
 - Typography: curated fonts, weight, max size, align, colors
 - Pretext-based auto type fit per layout
 - Templates (Tpl tab) and site themes (Light / Dark / Mint / Lilac / Navy)
-- Deep links: `/create?q=&author=` and shareable **Link** button
+- Deep links: `/create?q=&q2=&author=` (optional translation via `q2`) and shareable **Link** button
 - PWA: installable, offline shell + cached backgrounds, update prompt
 
 ### Stack

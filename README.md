@@ -48,7 +48,7 @@ Built as an Excalidraw-style workspace (toolbar + side panel + live stage) and s
 - **Templates** — quick-start compositions (Tpl tab)
 - **Site themes** — Light, Dark, Mint, Lilac, Navy (chrome only; quote canvas is independent)
 - **Export** — download a PNG of the frame
-- **Deep links** — prefill from partners with `/create?q=&author=`
+- **Deep links** — prefill from partners with `/create?q=&q2=&author=`
 - **PWA** — installable, offline shell + cached backgrounds, update prompt
 
 ### Built with
@@ -138,17 +138,18 @@ bun run preview
 
 ## Deep links
 
-Prefill the editor from another site (plain text only; 300-unit cap):
+Prefill the editor from another site (plain text or `b64.`-encoded; 1300-character cap per quote field):
 
 ```html
-<a href="https://your-host.example/create?q=Stay%20hungry&amp;author=Steve%20Jobs">
+<a href="https://your-host.example/create?q=Stay%20hungry&amp;q2=Restez%20affam%C3%A9&amp;author=Steve%20Jobs">
   Frame this quote
 </a>
 ```
 
 | Param | Meaning |
 |-------|---------|
-| `q` | Quote text |
+| `q` | Primary quote text |
+| `q2` | Optional second line (translation / alternate) |
 | `author` | Author name |
 
 Use **Link** in the app toolbar to copy a shareable URL for the current quote.
@@ -192,7 +193,7 @@ docker compose down
 
 - Prefer **HTTPS** in production (required for full PWA install on most mobile browsers).
 - Do not long-cache `/sw.js` or `*.webmanifest` (nginx already uses `must-revalidate`).
-- `/create?q=…&author=…` deep links work; `/` and `/create` are real app pages.
+- `/create?q=…&q2=…&author=…` deep links work; `/` and `/create` are real app pages.
 
 <p align="right">(<a href="#about">back to top</a>)</p>
 
