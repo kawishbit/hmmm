@@ -414,16 +414,15 @@ const panelTabs = [
     -->
     <header class="z-30 shrink-0 border-b border-hairline bg-canvas">
       <div class="flex h-12 items-center gap-1.5 px-2 sm:gap-2 sm:px-3">
-        <a href="/" class="flex shrink-0 items-center gap-2 pl-0.5" title="Hmmm home">
+        <a href="/" class="flex shrink-0 items-center pl-0.5" title="Hmmm home">
           <img
             src="/favicon.svg"
-            alt=""
+            alt="Hmmm"
             width="28"
             height="28"
-            class="size-7 shrink-0 rounded-md"
+            class="size-7 shrink-0"
             decoding="async"
           />
-          <span class="hidden text-[0.875rem] font-medium tracking-tight tool:inline">Hmmm</span>
         </a>
 
         <!-- Wide: layout in the middle -->
