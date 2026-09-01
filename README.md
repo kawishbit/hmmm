@@ -1,13 +1,17 @@
 <!-- PROJECT BANNER -->
 <p align="center">
-  <img src="logos/banners/banner.png" alt="Hmmm — full-screen quote image maker" width="100%" />
+  <img
+    src="logos/banners/banner.png"
+    width="100%"
+    alt="Hmmm — a browser-only quote image maker, shown beside two exported quote frames: a 4:5 blush card reading “Stay hungry. Stay foolish.” and a 1:1 navy card reading “Less, but better.”"
+  />
 </p>
 
 <h1 align="center">Hmmm</h1>
 
 <p align="center">
-  <strong>Full-screen quote image maker</strong> — type a quote, pick a layout, download a PNG.<br />
-  Installable PWA · no account · no backend required.
+  Quotes in, shareable images out — entirely in the browser.<br />
+  Nothing is uploaded, nothing is stored, and it installs as an offline PWA.
 </p>
 
 <p align="center">
@@ -23,11 +27,11 @@
 </p>
 
 <p align="center">
-  <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-ff3d8b?style=flat-square" />
-  <img alt="License" src="https://img.shields.io/badge/license-MIT-0a0a0a?style=flat-square" />
-  <img alt="Node" src="https://img.shields.io/badge/node-%3E%3D22.12-black?style=flat-square" />
+  <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-d01f6a?style=flat-square" />
+  <img alt="License" src="https://img.shields.io/badge/license-MIT-131313?style=flat-square" />
+  <img alt="Node" src="https://img.shields.io/badge/node-%3E%3D22.12-131313?style=flat-square" />
   <img alt="PWA" src="https://img.shields.io/badge/PWA-installable-1f1d3d?style=flat-square" />
-  <img alt="Stack" src="https://img.shields.io/badge/Astro%20%2B%20Vue%20%2B%20Tailwind-f7f7f5?style=flat-square&labelColor=0a0a0a" />
+  <img alt="Stack" src="https://img.shields.io/badge/Astro%20%2B%20Vue%20%2B%20Tailwind-ffe0f9?style=flat-square&labelColor=131313" />
 </p>
 
 <br />
@@ -227,13 +231,17 @@ Full plan: [plans/PLAN.md](./plans/PLAN.md).
 
 ## Brand assets
 
-Logo and repository banner live under [`logos/`](./logos/):
+Every asset below is cut from the same wordmark paths in [`logos/logo.svg`](./logos/logo.svg) — one mark, one place to change it.
 
-| Asset | Path |
-|-------|------|
-| Banner (3:1) | [`logos/banners/banner.png`](./logos/banners/banner.png) |
-| Logo (SVG / PNG) | [`logos/logo.svg`](./logos/logo.svg) · [`logos/logo.png`](./logos/logo.png) (Mono White) |
-| App icons | [`public/favicon.svg`](./public/favicon.svg) · [`public/icons/`](./public/icons/) · [`public/logo.svg`](./public/logo.svg) |
+| Asset | Path | Notes |
+|-------|------|-------|
+| README banner | [`banner.svg`](./logos/banners/banner.svg) · [`banner.png`](./logos/banners/banner.png) | 1200×420; the SVG is the editable source |
+| Logo | [`logo.svg`](./logos/logo.svg) · [`logo.png`](./logos/logo.png) | 1000×1000, blush field |
+| Wordmark only | [`public/logo.svg`](./public/logo.svg) | transparent background |
+| Favicon | [`public/favicon.svg`](./public/favicon.svg) · [`favicon.ico`](./public/favicon.ico) | ICO carries 16 / 32 / 48 |
+| App icons | [`public/icons/`](./public/icons/) | apple-touch 180 · PWA 192 / 512 · maskable 192 / 512 |
+
+Mark palette: blush `#FFE0F9` · magenta `#D01F6A` · ink `#131313`. The full token set lives in [DESIGN.md](./DESIGN.md).
 
 ## License
 
