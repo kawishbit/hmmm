@@ -12,7 +12,7 @@
 ## Scope
 
 ### PWA
-- [x] `@vite-pwa/astro` + Workbox (`registerType: autoUpdate`)
+- [x] `@vite-pwa/astro` + Workbox (`registerType: prompt`)
 - [x] Manifest: name **Hmmm**, standalone, theme colors, icons any + maskable
 - [x] Icons 192/512 (any + maskable) + apple-touch-icon
 - [x] iOS meta tags

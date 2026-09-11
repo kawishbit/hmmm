@@ -53,7 +53,7 @@ Built as an Excalidraw-style workspace (toolbar + side panel + live stage) and s
 - **Site themes** — Light, Dark, Mint, Lilac, Navy (chrome only; quote canvas is independent)
 - **Export** — download a PNG of the frame
 - **Deep links** — prefill from partners with `/create?q=&q2=&author=`
-- **PWA** — installable, offline shell + cached backgrounds, update prompt
+- **PWA** — installable, offline shell + cached backgrounds; after you redeploy, open tabs prompt **Update available → Reload**
 
 ### Built with
 
@@ -172,7 +172,7 @@ Hmmm is a **static** site (`dist/`). No database, no server-side API.
 4. Output directory: `dist`.
 5. Node version: **22** (`.nvmrc` / `engines`).
 
-Cache headers for hashed assets and the service worker are defined in `vercel.json`.
+Cache headers for hashed assets, HTML shells, and the service worker are defined in `vercel.json`. Redeploys surface an in-app **Update available** prompt (service worker); no version API required.
 
 ### Docker
 
@@ -197,6 +197,8 @@ docker compose down
 
 - Prefer **HTTPS** in production (required for full PWA install on most mobile browsers).
 - Do not long-cache `/sw.js` or `*.webmanifest` (nginx already uses `must-revalidate`).
+- HTML for `/` and `/create` also uses `must-revalidate` so cold loads pick up new shells after you ship an image.
+- Open tabs check for a new service worker on focus and about every 5 minutes, then prompt **Reload**.
 - `/create?q=…&q2=…&author=…` deep links work; `/` and `/create` are real app pages.
 
 <p align="right">(<a href="#about">back to top</a>)</p>
